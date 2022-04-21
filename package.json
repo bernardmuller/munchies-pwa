@@ -1,0 +1,40 @@
+{
+  "name": "munchies-pwa",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "",
+    "cypress:open": "cypress open"
+  },
+  "dependencies": {
+    "cookies-next": "^2.0.4",
+    "next": "12.1.0",
+    "next-pwa": "^5.4.6",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.28.1",
+    "react-icons": "^4.3.1",
+    "react-widgets": "^5.8.3",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.22",
+    "@types/react": "17.0.41",
+    "@types/styled-components": "^5.1.24",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "^2.0.6",
+    "cypress": "^9.5.3",
+    "eslint": "8.11.0",
+    "eslint-config-next": "12.1.0",
+    "typescript": "4.6.2"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  }
+}
