@@ -105,24 +105,6 @@ const Login = () => {
 
           </Header>
 
-          <GoogleButton
-            id='google-btn'
-          >
-            <img 
-              src="https://img.icons8.com/color/50/000000/google-logo.png" 
-              alt="google icon"
-              id='google-icon'
-            />
-
-            Use Google Account
-          </GoogleButton>
-
-          <Or>
-            <div></div>
-              <span>OR</span>
-            <div></div>
-          </Or>
-
           <Form
             id="login-form"
           >

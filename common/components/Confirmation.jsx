@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { 
     colors,  
-    DeviceMediaQueries,
     FontSizes
 } from 'common';
 
@@ -71,7 +70,6 @@ export const Confirmation = props => {
         </React.Fragment>
     )
 };
-
 
 const BackdropContainer = styled.div`
     position: fixed;

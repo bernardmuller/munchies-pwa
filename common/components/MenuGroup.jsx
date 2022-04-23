@@ -48,7 +48,9 @@ export const MenuGroup = props => {
             {expand &&
                 <ItemsContainer>
                     {menus.map((item, index) => (
-                        <GroupItem />
+                        <GroupItem 
+                            key={index}
+                        />
                     ))}
                 </ItemsContainer>
             }

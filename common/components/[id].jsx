@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Header, Confirmation, MealDirections, MealInfo } from "common/components";
+import { Header } from "common/components";
+import MealDirections from "common/componentsMealDirections";
+import MealInfo from "common/components/MealInfo";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
+import Confirmation from "common/componentsConfirmation";
 import { getMeal, deleteMeal } from "common/actions";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
