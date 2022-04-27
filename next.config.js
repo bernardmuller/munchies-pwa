@@ -10,7 +10,9 @@ module.exports = withPWA({
   images: {
     domains: [
       'images.unsplash.com',
-      'unsplash.com/'
+      'unsplash.com/',
+      'avatars.githubusercontent.com',
+      'images.pexels.com'
     ],
     formats: ["image/webp"],
   }

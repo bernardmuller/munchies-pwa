@@ -2,6 +2,7 @@ import {
     Environment,
     resolveResponse,
     resolveRejected,
+    API_endpoint
 } from 'common';
 
 import {
@@ -45,7 +46,7 @@ export const updateMenu = async(id, data) => {
 };
   
 export const getMenus = async(token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/menus`;
+    const url = `${API_endpoint}menus`;
     
     try {
         const response = await Api.get(url, token);
@@ -61,7 +62,7 @@ export const getMenus = async(token) => {
 };
 
 export const getMenu = async(id, token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/menus/${id}`;
+    const url = `${API_endpoint}menus/${id}`;
     
     try {
         const response = await Api.get(url, token);
@@ -77,7 +78,7 @@ export const getMenu = async(id, token) => {
 };
 
 export const deleteMenu = async(id, token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/menus/${id}`;
+    const url = `${API_endpoint}menus/${id}`;
     
     try {
         const response = await Api.delete(url, token);
@@ -94,7 +95,7 @@ export const deleteMenu = async(id, token) => {
 
 
 export const addMealsToMenu = async(id, data, token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/menus/${id}/meals`;
+    const url = `${API_endpoint}menus/${id}/meals`;
     
     try {
         const response = await Api.post(url, data, token);

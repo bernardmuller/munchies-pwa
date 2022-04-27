@@ -1,16 +1,9 @@
-// import {
-//   DataStore,  
-// } from 'common/dataStore';
-
-// import { getCookie } from 'cookies-next';
-
 export class Api {
   constructor () {
 
   }
 
   static setHeaders = (headers, token) => {
-    console.log("3, " ,token)
     if (token) {
       headers['authorization'] = `Bearer ${token}`;
       headers['Access-Control-Allow-Methods']='GET, POST, PATCH, PUT, DELETE, OPTIONS';
@@ -42,14 +35,12 @@ export class Api {
   };
 
   static get = (url, token) => {
-    console.log("2, ", token)
     return this.sendRequest(url, {
       method: 'GET',
     }, token);
   };
 
   static post = (url, data, token) => {
-    console.log(token)
     return this.sendRequest(url, {
       method: 'POST',
       body: data,

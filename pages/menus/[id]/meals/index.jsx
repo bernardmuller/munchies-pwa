@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Header, H4, Button, MealCard,  } from "common/components";
 import { FontSizes, colors } from "common";
@@ -19,7 +19,9 @@ const MenuMeals = (props) => {
 	const [menu, setMenu] = useState(props.menu);
 	const [selectedMeals, setSelectedMeals] = useState(props.menu_meals);
 
-	activeContext.dispatch({ type: "MEALS" });
+	useEffect(() => {
+		activeContext.dispatch({ type: "MEALS" });
+	}, [])
 
 	const removeMeal = async () => {
 		setShowConfirmation(false);

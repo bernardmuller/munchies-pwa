@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import {
 	Text,
@@ -13,7 +13,7 @@ import {
 	GroceryList,
 } from "common/components";
 import { FontSizes, colors } from "common";
-import MealCard from "common/components/card/MealCard";
+import { MealCard } from "common/components/card/MealCard";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
@@ -31,7 +31,9 @@ const MenuDetail = (props) => {
 	const [menu, setMenu] = useState(props.menu);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
-	activeContext.dispatch({ type: "MEALS" });
+	useEffect(() => {
+		activeContext.dispatch({ type: "MEALS" })
+	}, [])
 
 	const removeMeal = async () => {
 		setShowConfirmation(false);
@@ -87,7 +89,6 @@ const MenuDetail = (props) => {
 				<H4 fontSize={FontSizes.Regular}>Meals</H4>
 
 				<Link href={`/menus/${menu._id}/meals`}>
-					{/* <a href={`/menus/${menu.id}/meals`}>edit</a> */}
 					<a>edit</a>
 				</Link>
 			</Wrapper>

@@ -18,7 +18,7 @@ const MealDetail = (props) => {
 
 	useEffect(() => {
 		activeContext.dispatch({ type: "MEALS" });
-	});
+	}, []);
 
 	const removeMeal = async () => {
 		setShowConfirmation(false);

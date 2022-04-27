@@ -1,19 +1,14 @@
 import {
-    Environment,
-    resolveResponse,
     resolveRejected,
+    API_endpoint
 } from 'common';
 
 import {
     Api
 } from 'common/actions';
 
-import {
-    DataStore
-} from 'common/dataStore';
-
 export const updateIngredient = async(id, data, token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/ingredients/${id}`;
+    const url = `${API_endpoint}ingredients/${id}`;
   
     try { 
         const response = await Api.put(url, data, token);
@@ -45,7 +40,7 @@ export const updateIngredient = async(id, data, token) => {
 // };
 
 export const getIngredients = async(token) => {
-    const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/ingredients`;
+    const url = `${API_endpoint}ingredients`;
     
     try {
         const response = await Api.get(url, token);

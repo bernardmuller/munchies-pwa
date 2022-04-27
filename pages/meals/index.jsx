@@ -16,6 +16,7 @@ function Meals(props) {
 
 	const activeContext = useContext(ActiveViewContext);
 	const [creatingMeal, setCreatingMeal] = useState(false);
+	const [loading, setLoading] = useState(false)
 
 	const fetchData = async () => {
 		setLoading(true);

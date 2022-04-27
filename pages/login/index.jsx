@@ -20,7 +20,8 @@ import {
   colors,
   FontSizes, 
   appVersion,
-  DeviceMediaQueries
+  DeviceMediaQueries,
+  API_endpoint
 } from 'common';
 
 import { 
@@ -50,7 +51,7 @@ const Login = () => {
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
 
-      const res = await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/auth/login', {
+      const res = await fetch(`${API_endpoint}auth/login`, {
           method: 'POST',
           mode: 'cors',
           redirect: 'follow',

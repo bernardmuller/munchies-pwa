@@ -1,8 +1,8 @@
-import { Environment, resolveResponse, resolveRejected } from "common";
+import { Environment, resolveResponse, resolveRejected, API_endpoint} from "common";
 import { Api } from "common/actions";
 
 export const createMeal = async (token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals`;
+	const url = `${API_endpoint}meals`;
 	try {
 		const response = await Api.post(url, {}, token);
 		return response;
@@ -16,7 +16,7 @@ export const createMeal = async (token) => {
 };
 
 export const updateMeal = async (id, data, token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+	const url = `${API_endpoint}meals/${id}`;
 	try {
 		const response = await Api.put(url, data, token);
 		return response;
@@ -30,7 +30,7 @@ export const updateMeal = async (id, data, token) => {
 };
 
 export const getMeals = async (token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals`;
+	const url = `${API_endpoint}meals`;
 
 	try {
 		const response = await Api.get(url, token);
@@ -47,7 +47,7 @@ export const getMeals = async (token) => {
 };
 
 export const getMeal = async (id, token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+	const url = `${API_endpoint}meals/${id}`;
 	try {
 		const response = await Api.get(url, token);
 		// return resolveResponse(response);
@@ -62,7 +62,7 @@ export const getMeal = async (id, token) => {
 };
 
 export const removeIngredient = async (id, ingredient_id, token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}/remove`;
+	const url = `${API_endpoint}meals/${id}/remove`;
 
 	try {
 		const response = await Api.post(
@@ -81,7 +81,7 @@ export const removeIngredient = async (id, ingredient_id, token) => {
 };
 
 export const addIngredient = async (id, ingredient_id, token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}/add`;
+	const url = `${API_endpoint}meals/${id}/add`;
 
 	try {
 		const response = await Api.post(
@@ -100,7 +100,7 @@ export const addIngredient = async (id, ingredient_id, token) => {
 };
 
 export const deleteMeal = async (id, token) => {
-	const url = `https://munchies-api-5fqmkwna4q-nw.a.run.app/meals/${id}`;
+	const url = `${API_endpoint}meals/${id}`;
 
 	try {
 		const response = await Api.delete(url, token);

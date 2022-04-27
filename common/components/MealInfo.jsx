@@ -42,8 +42,6 @@ const Name = (props) => {
 		handleUpdateName(data);
 	};
 
-	console.log(props.data);
-
 	return (
 		<Wrapper
 			onMouseEnter={() => setHover(true)}
@@ -361,11 +359,6 @@ const MealImageContainer = styled.div`
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-	}
-
-	@media ${DeviceMediaQueries.tablet} {
-		/* width: 50%; */
-		max-height: 20rem;
 	}
 `;
 

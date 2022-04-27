@@ -14,6 +14,8 @@ export const UserInfo = (props) => {
 					<Image 
                         src={user.image} 
                         alt="profile picture" 
+						layout="fill"
+						objectFit="cover"
                     />
 				</ImageContainer>
 			) : (
@@ -21,6 +23,8 @@ export const UserInfo = (props) => {
 					<Image 
                         src={pp} 
                         alt="user image" 
+						layout="fill"
+						objectFit="cover"
                     />
 				</Placeholder>
 			)}

@@ -1,5 +1,7 @@
 export const appVersion = "v0.2.1"
 
+export const API_endpoint = 'https://munchies-api-xp8sb.ondigitalocean.app/'
+
 export const colors = {
     primary: "#68BF50",    
     primary_light: "#7BC766",    

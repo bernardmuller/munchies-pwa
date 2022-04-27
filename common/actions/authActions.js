@@ -1,17 +1,8 @@
-// import axios from 'axios';
-
 import {
-  // Environment,
   resolveResponse,
   resolveRejected,
-  // ApiEndpoints,
+  API_endpoint
 } from 'common';
-
-// import {
-//   getReq,
-//   patchReq,
-//   postReq,
-// } from 'common/dataStore';
 
 import {
   Api
@@ -19,47 +10,34 @@ import {
 
 
 export const login = async( email, password ) => {
-    
     try {
-
       if (!email) {
-
           return {
           ok: false,
           message: 'Please provide a valid email',
           data: null,
           };
-      }
+      };
 
       if (!password) {
-
           return {
           ok: false,
           message: 'Please provide a valid password',
           data: null,
           };
-      }
+      };
 
-      const ret = await Api.post(`http://localhost:8080/login`, {email, password})
+      const ret = await Api.post(API_endpoint, {email, password})
         
       return resolveResponse(ret);
-
     } catch (ex) {
-
       let ret = resolveRejected(ex);
-
       if (ex && ex.response && ex.response.status === 401) {
-
           ret.message = 'Invalid username or password';
-
       }
-      
       return ret;
-
     }
-
 }
-
 
 export const setPassword = async ( 
   firstname,

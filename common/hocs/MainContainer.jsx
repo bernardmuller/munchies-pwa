@@ -21,8 +21,6 @@ export const PrivateContainer = (props) => {
 		auth();
 	}, []);
 
-	console.log("check");
-
 	return (
 		<PageContainer>
 			<Nav
@@ -49,6 +47,4 @@ const Content = styled.div`
 	width: 100%;
 	height: 95vh;
 	position: relative;
-	/* background-color: ${colors.secondary}; */
-	/* transition: all 0.5s ease-in-out; */
 `;
