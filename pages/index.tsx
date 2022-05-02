@@ -1,14 +1,16 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter } from 'next/router';
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { DeviceMediaQueries } from 'common/device';
 
-const Home: NextPage= () => {
-  const router = useRouter();
-  // router.push('/login')
+const Main = styled.main`
+  @media ${DeviceMediaQueries.laptop} {
+    display: none;
+  }
+`;
+
+const Home: NextPage = () => {
   return (
     <div>
       <Head>
@@ -17,26 +19,12 @@ const Home: NextPage= () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Main style={{marginTop: "1rem"}}>
-        {/* <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1> */}
-
-        <Link href="/login">
-          <a>Login</a>
-        </Link>
-
-        
+      <Main style={{ marginTop: '1rem' }}>
+        <Link href="/login">Login</Link>
       </Main>
       <p> 🚧 Web version under construction 🚧 </p>
     </div>
-  )
-}
+  );
+};
 
-export default Home
-
-const Main = styled.main`
-  @media ${DeviceMediaQueries.laptop} {
-    display: none;
-  }
-`
+export default Home;
