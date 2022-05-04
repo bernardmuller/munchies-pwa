@@ -1,63 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import Head from 'next/head';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import bg from 'assets/images/login_bg.jpg';
-import { colors, FontSizes, appVersion, DataStore } from 'common';
-import { Button, H1, H2, Text, Input } from 'common/components';
+import { colors, DataStore } from 'common';
 import { apiEndpoint } from 'common/constants';
 import { setCookies } from 'cookies-next';
-
-const Form = styled.form`
-  display: grid;
-  grid-template-columns: 1;
-  gap: 1.5rem;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-`;
-
-const Label = styled.label`
-  font-size: ${FontSizes.Regular};
-  margin: 0.3rem 0;
-`;
-
-const Footer = styled.div`
-  text-align: center;
-
-  a {
-    text-decoration: none;
-    color: grey;
-    font-family: sans-serif;
-    font-size: 0.9rem;
-  }
-`;
-
-const Version = styled.div`
-  position: absolute;
-  bottom: 0.5rem;
-  left: 1rem;
-`;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  background-image: url(${bg});
-  background-size: 750px;
-  background-color: black;
-
-  & > img {
-    position: absolute;
-    left: 0;
-    z-index: 0;
-  }
-`;
+import { login } from 'api';
+import { useForm } from 'react-hook-form';
+import {
+  Button,
+  Heading,
+  Text,
+  Input,
+  InputGroup,
+  InputRightElement,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Flex,
+  Stack,
+} from '@chakra-ui/react';
+import Link from 'next/link';
 
 const Background = styled.div`
   position: absolute;
@@ -72,48 +35,28 @@ const Background = styled.div`
   }
 `;
 
-const LoginCardContainer = styled.div`
-  background-color: white;
-  height: 100vh;
-  width: 33.333%;
-  padding: 4rem 5%;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  min-width: 375px;
-  position: relative;
-
-  @media (max-width: 1280px) {
-    padding: 4rem 5%;
-    min-width: 450px;
-  }
-
-  @media (max-width: 767px) {
-    padding: 2rem 10%;
-    width: 100%;
-    min-width: 375px;
-  }
-`;
-
 function Login() {
-  const enteredEmail = useRef();
-  const enteredPassword = useRef();
-  const [error, setError] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router = useRouter();
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const [requestError, setRequestError] = useState({
+    email: '',
+    password: '',
+  });
 
+  async function onSubmit(data) {
     try {
-      setError('');
-
+      setLoading(true);
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
-
       const res = await fetch(`${apiEndpoint}auth/login`, {
         method: 'POST',
         mode: 'cors',
@@ -121,106 +64,134 @@ function Login() {
         credentials: 'include',
         headers,
         body: JSON.stringify({
-          email: enteredEmail.current.value,
-          password: enteredPassword.current.value,
+          email: data.email,
+          password: data.password,
         }),
       });
-      const data = await res.json();
 
-      if (data.errors) {
-        setEmailError(data.errors.email);
-        setPasswordError(data.errors.password);
+      const response = await res.json();
+
+      if (response.errors) {
+        setRequestError(response.errors.email);
+        setRequestError(response.errors.password);
       }
+      await DataStore.set('MUNCHIES_USER', response.user);
 
-      await DataStore.set('MUNCHIES_USER', data.user);
-      setCookies('token', data.token);
-      setCookies('user', data.user);
+      setCookies('token', response.token);
+      setCookies('user', response.user);
 
-      if (data.user) {
+      if (response.user) {
         router.push('/meals');
       }
+
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
+    console.log(data);
   }
   return (
-    <Container>
+    <>
+      <Head>
+        <title>Munchies - Login</title>
+      </Head>
+
       <Background />
 
-      <LoginCardContainer>
-        <div>
-          <H1>MUNCHIES</H1>
+      <Stack padding="2rem" gap="5">
+        <Flex direction="column">
+          <Heading mb={4} fontSize="4xl" fontWeight={800}>
+            MUNCHIES
+          </Heading>
 
-          <H2 margin="0" fontSize={FontSizes.Regular}>
-            <strong>Log</strong> in
-          </H2>
+          <Heading color="grey" fontSize="2xl">
+            Log in
+          </Heading>
+        </Flex>
 
-          {error && (
-            <h4 style={{ color: 'red', border: '1px solid red' }}>{error}</h4>
-          )}
-        </div>
+        <Text>{requestError && requestError.email}</Text>
+        <Text>{requestError && requestError.password}</Text>
 
-        <Form id="login-form">
-          <div>
-            <Label htmlFor="email">Email</Label>
+        <form id="login-form" onSubmit={handleSubmit(onSubmit)}>
+          <Flex direction="column" gap={4}>
+            <FormControl isInvalid={errors.email}>
+              <InputGroup size="lg">
+                <Flex direction="column" width="full">
+                  <FormLabel htmlFor="email">Email</FormLabel>
 
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              ref={enteredEmail}
-              placeholder="eg. email@email.com"
-              required
-            />
-          </div>
+                  <Input
+                    type="email"
+                    id="email"
+                    h="3.2rem"
+                    placeholder="Enter email"
+                    {...register('email', {
+                      required: 'Please enter a valid email',
+                    })}
+                  />
 
-          {emailError && <Text color={colors.danger}>{emailError}</Text>}
+                  <FormErrorMessage>
+                    {errors.email && errors.email.message}
+                  </FormErrorMessage>
+                </Flex>
+              </InputGroup>
+            </FormControl>
 
-          <div>
-            <Label htmlFor="password">Password</Label>
+            <FormControl isInvalid={errors.email}>
+              <InputGroup size="lg">
+                <Flex direction="column" width="full">
+                  <Text>Password</Text>
 
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              ref={enteredPassword}
-              placeholder="*******"
-              required
-            />
-          </div>
+                  <Input
+                    pr="4rem"
+                    h="3.2rem"
+                    type={show ? 'text' : 'password'}
+                    placeholder="Enter password"
+                    {...register('password', {
+                      required: 'Please enter a valid password',
+                    })}
+                  />
+                  <InputRightElement width="5.6rem" mt={6}>
+                    <Button mt={1} h="2rem" size="md" onClick={handleClick}>
+                      {show ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                  <FormErrorMessage>
+                    {errors.password && errors.password.message}
+                  </FormErrorMessage>
+                </Flex>
+              </InputGroup>
+            </FormControl>
+            <Button
+              type="submit"
+              variant="solid"
+              backgroundColor="primary.500"
+              color="white"
+              size="md"
+              isLoading={loading}
+              mt="1.5rem"
+            >
+              Log In
+            </Button>
+          </Flex>
+        </form>
 
-          {passwordError && <Text color={colors.danger}>{passwordError}</Text>}
+        <Flex direction="column" gap="1rem" width="full" align="center">
+          <Link href="/forgot-password" passHref>
+            <Text fontSize="sm" color={colors.grey_dark}>
+              Forgot Password?
+            </Text>
+          </Link>
 
-          <Button
-            primary
-            height="3rem"
-            type="submit"
-            disabled={false}
-            // eslint-disable-next-line react/jsx-no-bind
-            onClick={handleSubmit}
-            width="100%"
-            margin="1rem 0 0 0"
-            fontSize="1.2rem"
-          >
-            Log In
-          </Button>
-        </Form>
-
-        <Footer>
-          <a to="/forgot-password">Forgot Password?</a>
-        </Footer>
-
-        <div>
-          Need an account? <a to="/auth/register">Sign up</a>
-        </div>
-
-        <Version>
-          <Text fontSize={FontSizes.Small} color={colors.grey_light}>
-            {appVersion}
-          </Text>
-        </Version>
-      </LoginCardContainer>
-    </Container>
+          <Flex gap="2">
+            Need an account?
+            <Link href="/register" passHref>
+              <strong>Sign up</strong>
+            </Link>
+          </Flex>
+        </Flex>
+      </Stack>
+    </>
   );
 }
 

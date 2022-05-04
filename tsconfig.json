@@ -31,7 +31,8 @@
     "components/button/Button.jsx",
     "components/Navbar/Sidebar.jsx",
     "components/page-header/Header.jsx",
-    "common/hocs/MainContainer.jsx"
+    "common/hocs/MainContainer.jsx",
+    "common/components/loadingModal/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

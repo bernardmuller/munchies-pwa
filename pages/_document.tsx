@@ -1,5 +1,6 @@
+import { ColorModeScript } from '@chakra-ui/react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-
+import theme from 'common/theme';
 class MyDocument extends Document {
   render() {
     return (
@@ -10,6 +11,7 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#fff" />
         </Head>
         <body>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <div id="backdrop-root" />
           <div id="overlay-root" />
           <Main />

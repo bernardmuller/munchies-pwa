@@ -11,7 +11,7 @@ const Container = styled.div`
   height: 100px;
   width: 100%;
   background-color: ${props =>
-    props.secondary ? colors.secondary_light : colors.secondary_dark};
+    props.secondary ? colors.secondary_light : colors.secondary};
   border-radius: 20px;
 
   &:hover {
@@ -38,7 +38,7 @@ const ImageContainer = styled.div`
   width: 100px;
   min-width: 100px;
   border-radius: 20px;
-  border: 8px solid ${colors.secondary};
+  border: 8px solid ${colors.secondary_light};
   display: flex;
   align-items: center;
   justify-content: center;

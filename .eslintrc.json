@@ -35,6 +35,7 @@
     "import/no-cycle": "off",
     "react/function-component-definition": "off",
     "arrow-body-style": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "react/jsx-no-bind": "off"
   }
 }

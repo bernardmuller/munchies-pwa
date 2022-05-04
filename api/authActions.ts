@@ -2,7 +2,7 @@ import { apiEndpoint } from 'common/constants';
 import { Api } from './Api';
 import { resolveResponse, resolveRejected } from './apiUtils';
 
-export const login = async (email: String, password: String, token: String) => {
+export const login = async (email: String, password: String) => {
   try {
     if (!email) {
       return {
@@ -20,7 +20,7 @@ export const login = async (email: String, password: String, token: String) => {
       };
     }
 
-    const ret = await Api.post(apiEndpoint, { email, password }, token);
+    const ret = await Api.post(apiEndpoint, { email, password }, '');
 
     return resolveResponse(ret);
   } catch (ex: any) {
