@@ -13,6 +13,7 @@ const Container = styled.div`
   background-color: ${props =>
     props.secondary ? colors.secondary_light : colors.secondary};
   border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   &:hover {
     cursor: pointer;
@@ -80,8 +81,8 @@ export function MealCardList({ onClick, image, secondary, seasons, name }) {
   return (
     <Container
       onClick={() => onClick()}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      // onMouseEnter={() => setHover(true)}
+      // onMouseLeave={() => setHover(false)}
     >
       <ImageContainer>
         {image ? (

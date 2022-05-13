@@ -2,7 +2,7 @@ import { apiEndpoint } from 'common/constants';
 import { Api } from './Api';
 import { resolveRejected } from './apiUtils';
 
-export const getUser = async (id: any, token: String) => {
+export const getUser = async (id: String, token: String) => {
   const url = `${apiEndpoint}users/${id}`;
 
   try {
@@ -18,7 +18,7 @@ export const getUser = async (id: any, token: String) => {
   }
 };
 
-export const updateUser = async (id: any, data: Object, token: String) => {
+export const updateUser = async (id: String, data: Object, token: String) => {
   const url = `${apiEndpoint}users/${id}`;
   try {
     const response = await Api.put(url, data, token);

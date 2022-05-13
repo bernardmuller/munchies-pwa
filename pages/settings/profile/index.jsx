@@ -10,17 +10,11 @@ import { useRouter } from 'next/router';
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-`;
-
-const LoaderContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+  gap: 1rem;
+  background-color: ${colors.secondary_dark};
 `;
 
 const Profile = ({ data }) => {
@@ -52,29 +46,15 @@ const Profile = ({ data }) => {
   }, []);
 
   return (
-    <PrivateContainer>
-      <Container>
-        {!loading ? (
-          <>
-            <Header
-              heading="Settings"
-              LeftIcon={IoArrowBackOutline}
-              onLeftButtonClick={() => router.back()}
-            />
-            <UserInfo user={user} loading={loading} />
-            <EditProfile
-              user={user}
-              onUpdate={handleUpdate}
-              loading={loading}
-            />
-          </>
-        ) : (
-          <LoaderContainer>
-            <Loader spinnerColor={colors.secondary} size="24px" />
-          </LoaderContainer>
-        )}
-      </Container>
-    </PrivateContainer>
+    <Container>
+      <Header
+        heading="Settings"
+        LeftIcon={IoArrowBackOutline}
+        onLeftButtonClick={() => router.back()}
+      />
+      <UserInfo user={user} loading={loading} />
+      <EditProfile data={user} onUpdate={handleUpdate} loading={loading} />
+    </Container>
   );
 };
 
@@ -85,11 +65,11 @@ export async function getServerSideProps(context) {
   const token = getCookie('token', { req, res });
   const currentUser = getCookie('user', { req, res });
 
-  const data = await getUser(currentUser, token);
+  const user = await getUser(currentUser, token);
 
   return {
     props: {
-      data,
+      data: user,
     },
   };
 }

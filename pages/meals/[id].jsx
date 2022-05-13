@@ -6,6 +6,7 @@ import {
   MealDirections,
   MealInfo,
 } from 'common/components';
+import { colors } from 'common';
 import { IoArrowBackOutline, IoTrashOutline } from 'react-icons/io5';
 import { getMeal, deleteMeal } from 'api';
 import { getCookie } from 'cookies-next';
@@ -14,7 +15,9 @@ import { ActiveViewContext } from 'contexts/ActiveViewContext';
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 200vh;
+  overflow-y: scroll;
+  background-color: ${colors.secondary_dark};
 `;
 
 const MealDetail = ({ data, onClose }) => {

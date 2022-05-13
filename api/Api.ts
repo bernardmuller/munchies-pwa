@@ -16,7 +16,6 @@ export class Api {
 
   static sendRequest = async (url: any, params: any, token: String) => {
     const headers = this.setHeaders(token);
-
     const data = params.body;
     delete params.body;
 
@@ -29,11 +28,10 @@ export class Api {
       .catch(err => {
         console.log('Request Error: ' + err);
       });
-
     return response;
   };
 
-  static get(url: any, token: String) {
+  static get(url: String, token: String) {
     return this.sendRequest(
       url,
       {

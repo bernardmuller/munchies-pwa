@@ -25,11 +25,15 @@ import Link from 'next/link';
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0.5rem 1rem;
+  background-color: ${colors.secondary_dark};
 `;
 
 const Content = styled.div`
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
+  background-color: ${colors.secondary};
+  border-radius: 0.5rem;
 `;
 
 const TitleWrapper = styled.div`
@@ -43,7 +47,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: ${props => props.height || '2rem'};
-  padding: 0 1rem;
+  padding: 0rem 1rem;
+  margin: 1rem 0;
 `;
 
 const NameForm = styled.form`
@@ -81,7 +86,7 @@ const Name = ({ name, onRename }) => {
     <TitleWrapper>
       {!edit ? (
         <H2
-          color={colors.secondary}
+          color={colors.white}
           fontSize={FontSizes.Big}
           margin="0"
           onClick={() => setEdit(true)}
@@ -204,12 +209,16 @@ const MenuDetail = ({ data }) => {
         </Text>
       </Content>
       <Wrapper>
-        <H4 fontSize={FontSizes.Regular}>Meals</H4>
+        <H4 color={colors.white} fontSize={FontSizes.Regular}>
+          Meals
+        </H4>
 
-        <Link href={`/menus/${menu._id}/meals`}>edit</Link>
+        <Link href={`/menus/${menu._id}/meals`} passHref>
+          <Text color={colors.primary}>edit</Text>
+        </Link>
       </Wrapper>
 
-      <WeekContainer>
+      <WeekContainer style={menu.meals.length < 1 && { display: 'none' }}>
         <MealsContainer>
           {menu &&
             menu.meals.map(meal => (
@@ -238,11 +247,11 @@ export async function getServerSideProps(context) {
   const { res } = context;
 
   const token = getCookie('token', { req, res });
-  const data = await getMenu(context.params.id, token);
+  const menu = await getMenu(context.params.id, token);
 
   return {
     props: {
-      data,
+      data: menu,
     },
   };
 }

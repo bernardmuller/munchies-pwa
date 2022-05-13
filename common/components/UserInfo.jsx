@@ -5,80 +5,6 @@ import { colors, FontSizes } from 'common';
 import { H2, Text, Loader } from 'common/components';
 import Image from 'next/image';
 
-export const UserInfo = props => {
-  const [user, setUser] = useState(props.user);
-  return (
-    <Container>
-      {!props.loading && user.image ? (
-        <ImageContainer>
-          <Image
-            src={user.image}
-            alt="profile picture"
-            layout="fill"
-            objectFit="cover"
-          />
-        </ImageContainer>
-      ) : (
-        <Placeholder>
-          <Image src={pp} alt="user image" layout="fill" objectFit="cover" />
-        </Placeholder>
-      )}
-      <H2 fontSize={FontSizes.Bigger} textAlign="center" margin="1rem 0 0 0">
-        {!props.loading ? (
-          user.firstname &&
-          user.lastname &&
-          `${props.user.firstname || ''} ${props.user.lastname || ''}`
-        ) : (
-          <Loader spinnerColor={colors.grey_light} size="18px" />
-        )}
-      </H2>
-
-      <Text
-        fontSize={FontSizes.Smaller}
-        color={colors.grey}
-        margin="0 0 1rem 0"
-      >
-        {!props.loading && user.email}
-      </Text>
-
-      <StatsContainer>
-        <Stat>
-          <Text color={colors.black} fontSize={FontSizes.Big}>
-            {!props.loading ? (
-              user.menus && user.menus.length
-            ) : (
-              <Loader spinnerColor={colors.grey_light} size="18px" />
-            )}
-          </Text>
-          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
-            Menus
-          </Text>
-        </Stat>
-        <Stat borders>
-          <Text color={colors.black} fontSize={FontSizes.Big}>
-            {!props.loading ? (
-              user.meals && user.meals.length
-            ) : (
-              <Loader spinnerColor={colors.grey_light} size="18px" />
-            )}
-          </Text>
-          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
-            Meals
-          </Text>
-        </Stat>
-        <Stat>
-          <Text color={colors.black} fontSize={FontSizes.Big}>
-            N/A
-          </Text>
-          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
-            Favourites
-          </Text>
-        </Stat>
-      </StatsContainer>
-    </Container>
-  );
-};
-
 const ImageContainer = styled.div`
   height: 150px;
   width: 150px;
@@ -134,3 +60,81 @@ const Placeholder = styled.div`
     object-fit: cover;
   }
 `;
+
+export const UserInfo = ({ user, loading }) => {
+  return (
+    <Container>
+      {!loading && user.image ? (
+        <ImageContainer>
+          <Image
+            src={user.image}
+            alt="profile picture"
+            layout="fill"
+            objectFit="cover"
+          />
+        </ImageContainer>
+      ) : (
+        <Placeholder>
+          <Image src={pp} alt="user image" layout="fill" objectFit="cover" />
+        </Placeholder>
+      )}
+      <H2
+        fontSize={FontSizes.Bigger}
+        color={colors.white}
+        textAlign="center"
+        margin="1rem 0 0 0"
+      >
+        {!loading ? (
+          user.firstname &&
+          user.lastname &&
+          `${user.firstname || ''} ${user.lastname || ''}`
+        ) : (
+          <Loader spinnerColor={colors.grey_light} size="18px" />
+        )}
+      </H2>
+
+      <Text
+        fontSize={FontSizes.Smaller}
+        color={colors.grey}
+        margin="0 0 1rem 0"
+      >
+        {!loading && user.email}
+      </Text>
+
+      <StatsContainer>
+        <Stat>
+          <Text color={colors.white} fontSize={FontSizes.Big}>
+            {!loading ? (
+              user.menus && user.menus.length
+            ) : (
+              <Loader spinnerColor={colors.grey_light} size="18px" />
+            )}
+          </Text>
+          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
+            Menus
+          </Text>
+        </Stat>
+        <Stat borders>
+          <Text color={colors.white} fontSize={FontSizes.Big}>
+            {!loading ? (
+              user.meals && user.meals.length
+            ) : (
+              <Loader spinnerColor={colors.grey_light} size="18px" />
+            )}
+          </Text>
+          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
+            Meals
+          </Text>
+        </Stat>
+        <Stat>
+          <Text color={colors.white} fontSize={FontSizes.Big}>
+            N/A
+          </Text>
+          <Text color={colors.grey} fontSize={FontSizes.Smaller}>
+            Favourites
+          </Text>
+        </Stat>
+      </StatsContainer>
+    </Container>
+  );
+};

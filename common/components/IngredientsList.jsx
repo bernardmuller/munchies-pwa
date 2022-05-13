@@ -4,37 +4,47 @@ import { Text } from 'common/components';
 import { colors, FontSizes } from 'common';
 import { IoCheckboxOutline, IoCheckbox } from 'react-icons/io5';
 
-export const IngredientsList = props => {
-  const [expand, setExpand] = useState(false);
-  return (
-    <Container>
-      <Text
-        fontSize={FontSizes.Small}
-        color={colors.secondary_light}
-        margin="0 0 0.5rem 0"
-      >
-        {props.name}
-      </Text>
-      <ItemsContainer>
-        {[1, 2, 3, 4].map((item, index) => (
-          <Item key={index} data={'item name'} />
-        ))}
-      </ItemsContainer>
-    </Container>
-  );
-};
+const Container = styled.div`
+  width: 100%;
+  display: grid;
+`;
 
-const Item = props => {
-  const [hover, setHover] = useState(false);
+const ItemsContainer = styled.ul`
+  width: 100%;
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  padding: 0;
+  gap: 0.4rem;
+`;
+
+const ItemWrapper = styled.li`
+  outline: none;
+  border: none;
+  background: none;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.3rem 1rem;
+  display: flex;
+  border-radius: 4px;
+  align-items: center;
+  box-shadow: ${props =>
+    props.checked ? null : 'rgba(0, 0, 0, 0.16) 0px 1px 4px'};
+  background-color: ${props =>
+    props.checked ? colors.secondary : colors.secondary_light};
+`;
+
+const ItemName = styled.span`
+  text-decoration: ${props => (props.checked ? 'line-through' : '')};
+  color: ${props => props.color};
+  margin: ${props => props.margin};
+`;
+
+const Item = ({ data }) => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <ItemWrapper
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={() => {}}
-      checked={checked}
-    >
+    <ItemWrapper onClick={() => {}} checked={checked}>
       {checked ? (
         <IoCheckbox
           color={colors.primary}
@@ -50,11 +60,11 @@ const Item = props => {
       )}
       <ItemName
         fontSize={FontSizes.Small}
-        color={checked ? colors.grey_light : colors.secondary_light}
+        color={checked ? colors.grey_dark : colors.grey}
         margin="0 0 0 0.5rem"
         checked={checked}
       >
-        {props.data || 'name'}
+        {data || 'name'}
       </ItemName>
 
       {/* <Text>
@@ -79,39 +89,21 @@ const Item = props => {
   );
 };
 
-const Container = styled.div`
-  width: 100%;
-  display: grid;
-`;
-
-const ItemsContainer = styled.ul`
-  width: 100%;
-  /* display: grid; */
-  display: flex;
-  margin: 0;
-  flex-direction: column;
-  padding: 0;
-  gap: 0.4rem;
-`;
-
-const ItemWrapper = styled.li`
-  outline: none;
-  border: none;
-  background: none;
-  width: 100%;
-  height: 2.5rem;
-  padding: 0.3rem 1rem;
-  display: flex;
-  border-radius: 4px;
-  align-items: center;
-  box-shadow: ${props =>
-    props.checked ? null : 'rgba(0, 0, 0, 0.16) 0px 1px 4px'};
-
-  &:hover {
-    background-color: ${colors.white_dark};
-  }
-`;
-
-const ItemName = styled.span`
-  text-decoration: ${props => (props.checked ? 'line-through' : '')};
-`;
+export const IngredientsList = ({ name }) => {
+  return (
+    <Container>
+      <Text
+        fontSize={FontSizes.Small}
+        color={colors.white}
+        margin="0 0 0.5rem 0"
+      >
+        {name}
+      </Text>
+      <ItemsContainer>
+        {[1, 2, 3, 4].map(item => (
+          <Item key={item + Math.random()} data="item name" />
+        ))}
+      </ItemsContainer>
+    </Container>
+  );
+};

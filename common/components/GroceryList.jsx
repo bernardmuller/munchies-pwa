@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { H3, Text } from 'common/components';
 import { colors, FontSizes } from 'common';
 import { IngredientsList } from './IngredientsList';
 import { ExtraItems } from './ExtraItems';
 
-export const GroceryList = props => {
-  const [items, setItems] = useState([1, 2, 3, 4]);
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const Head = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const GroceryList = () => {
   const misc = [
+    { name: 'Misc Item' },
+    { name: 'Misc Item' },
+    { name: 'Misc Item' },
+    { name: 'Misc Item' },
     { name: 'Misc Item' },
     { name: 'Misc Item' },
     { name: 'Misc Item' },
@@ -29,10 +45,10 @@ export const GroceryList = props => {
   return (
     <Container>
       <Head>
-        <H3 color={colors.Secondary} fontSize={FontSizes.Regular}>
+        <H3 color={colors.white} fontSize={FontSizes.Regular}>
           Grocery list
         </H3>
-        <Text color={colors.grey_dark} fontSize={FontSizes.Small}>
+        <Text color={colors.grey} fontSize={FontSizes.Small}>
           Total Items: 8
         </Text>
       </Head>
@@ -43,16 +59,3 @@ export const GroceryList = props => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const Head = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;

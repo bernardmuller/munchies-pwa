@@ -13,13 +13,12 @@ import { NavOption } from './components/NavOption';
 
 const NavContainer = styled.div`
   display: flex;
-  /* position: fixed; */
-  /* width: 100%; */
   bottom: 0;
-  height: 4.1rem;
+  height: 5.5rem;
+  min-height: 5.5rem;
   z-index: 900;
   background-color: ${colors.secondary_dark};
-  /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+  /* padding: 0.5rem 0 0.5rem 0; */
 
   @media ${DeviceMediaQueries.laptop} {
     flex-direction: column;

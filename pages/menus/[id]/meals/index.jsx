@@ -11,6 +11,8 @@ import { ActiveViewContext } from 'contexts/ActiveViewContext';
 
 const Container = styled.div`
   width: 100%;
+  height: 100vh;
+  background-color: ${colors.secondary_dark};
 `;
 
 const Content = styled.div`
@@ -79,7 +81,9 @@ const MenuMeals = ({ menu, meals, menuMeals }) => {
       <Content />
 
       <Wrapper>
-        <H4 fontSize={FontSizes.Regular}>Select Meals</H4>
+        <H4 fontSize={FontSizes.Regular} color={colors.white}>
+          Select Meals
+        </H4>
 
         <Button
           primary
@@ -106,7 +110,6 @@ const MenuMeals = ({ menu, meals, menuMeals }) => {
                 season={meal.seasons}
                 count={2}
                 key={meal}
-                secondary
                 onClick={() => {
                   if (selectedMeals.includes(meal._id)) {
                     const temp = selectedMeals.filter(item => {

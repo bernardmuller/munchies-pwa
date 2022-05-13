@@ -48,7 +48,7 @@ export const getMenus = async (token: String) => {
   }
 };
 
-export const getMenu = async (id: any, token: String) => {
+export const getMenu = async (id: String, token: String) => {
   const url = `${apiEndpoint}menus/${id}`;
 
   try {

@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   padding: 0 1rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 6px;
+  background-color: ${colors.secondary_light};
 `;
 
 const Menu = styled.button`
@@ -27,6 +28,7 @@ const Menu = styled.button`
   border: none;
   font-size: ${FontSizes.Small};
   padding-left: 0.5rem;
+  color: ${colors.white};
 `;
 
 const MenusContainer = styled.div`
@@ -57,7 +59,7 @@ const MenuButton = ({ menu, onDelete, onClick }) => {
   const count = menu.meals.length;
   return (
     <>
-      {showConfirmation && (
+      {/* {showConfirmation && (
         <Confirmation
           text={`Are you sure you want to delete "${menu.name}"?`}
           onConfirm={() => {
@@ -66,36 +68,26 @@ const MenuButton = ({ menu, onDelete, onClick }) => {
           }}
           onCancel={() => setShowConfirmation(false)}
         />
-      )}
+      )} */}
       <Wrapper
-        onMouseEnter={() => setMenuHover(true)}
-        onMouseLeave={() => setMenuHover(false)}
+        // onMouseEnter={() => setMenuHover(true)}
+        // onMouseLeave={() => setMenuHover(false)}
         height="3rem"
-        style={{ backgroundColor: menuHover && '#F5F5F5' }}
+        onClick={() => onClick()}
       >
         <IoDocumentText size="1.4rem" color={colors.primary_dark} />
-        <Menu
-          onClick={() => {
-            if (!menuHover) {
-              setMenuHover(true);
-            } else {
-              onClick();
-            }
-          }}
-        >
-          {menu.name}
-        </Menu>
-        {menuHover && (
+        <Menu>{menu.name}</Menu>
+        {/* {menuHover && (
           <CancelButton
             color={colors.danger}
             onClick={() => setShowConfirmation(true)}
           />
-        )}
+        )} */}
         <Text
           fontSize={FontSizes.Small}
           color={colors.grey_dark}
           style={{
-            backgroundColor: colors.white_dark,
+            backgroundColor: colors.secondary,
             width: '1.5rem',
             minWidth: '1.5rem',
             height: '1.5rem',
@@ -156,8 +148,10 @@ const Menus = ({ data }) => {
             menus.map(menu => (
               <MenuButton
                 menu={menu}
-                key={menu}
-                onClick={() => router.push(`/menus/${menu._id}`)}
+                key={Math.random()}
+                onClick={() => {
+                  router.push(`/menus/${menu._id}`);
+                }}
                 onDelete={() => removeMenu(menu._id)}
               />
             ))}

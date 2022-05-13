@@ -1,6 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { IoPersonSharp, IoExitOutline } from 'react-icons/io5';
+import {
+  IoPersonSharp,
+  IoExitOutline,
+  IoChevronForward,
+} from 'react-icons/io5';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import { PrivateContainer, colors, appVersion, FontSizes } from 'common';
 import { Header, Text } from 'common/components';
@@ -22,8 +26,14 @@ const Link = styled.a`
   border-radius: 0.4rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
-
+  background-color: ${colors.secondary_light};
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
   a {
     display: flex;
     align-items: center;
@@ -57,7 +67,7 @@ const Settings = () => {
       <Container>
         <>
           <Header
-            heading="My Menus"
+            heading="Settings"
             onRightButtonClick={() => handleLogout()}
             RightIcon={IoExitOutline}
           />
@@ -80,8 +90,13 @@ const Settings = () => {
           </Wrapper>
 
           <Link href="/settings/profile">
-            <IoPersonSharp size="18px" />
-            <Text fontSize={FontSizes.Small}>My Profile</Text>
+            <div>
+              <IoPersonSharp size="18px" color={colors.primary} />
+              <Text fontSize={FontSizes.Small} color={colors.white}>
+                My Profile
+              </Text>
+            </div>
+            <IoChevronForward size="18px" color={colors.primary} />
           </Link>
         </>
       </Container>

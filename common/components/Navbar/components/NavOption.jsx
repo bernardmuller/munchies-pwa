@@ -10,7 +10,7 @@ import { colors } from 'common';
 import { IconContext } from 'react-icons';
 import { useRouter } from 'next/router';
 
-const NavOptionContainer = styled.div`
+const NavOptionContainer = styled.button`
   background: none;
   border: none;
   display: flex;
@@ -63,7 +63,7 @@ const IconContianer = styled.button`
     props.active ? `rgba(104, 191, 80, 0.60) 0px 5px 15px` : ``};
 `;
 
-export const NavOption = ({ title, Icon, onClick, path, active }) => {
+export const NavOption = ({ Icon, path, active }) => {
   // const history = useHistory();
   const router = useRouter();
   return (

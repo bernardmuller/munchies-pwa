@@ -1,33 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 import { FontSizes, colors } from 'common';
-
 import { Text, H4 } from 'common/components';
-
-import food from 'assets/images/sushi_bg.jpg';
 import ph from 'assets/images/food_ph.png';
 import Image from 'next/image';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
   width: 10.2rem;
   min-width: 10.2rem;
   height: 15rem;
   position: relative;
-  /* margin: 0 0 1rem 0; */
   justify-self: center;
   overflow: hidden;
   border-radius: 1rem;
-  padding: 1rem;
-  background-image: linear-gradient(
-    0deg,
-    rgb(0, 0, 0, 0.8),
-    rgb(255, 255, 255, 0)
-  );
+  background-color: ${colors.secondary};
   box-shadow: ${props =>
     props.active
       ? 'rgba(104, 191, 80, 0.50) 0px 5px 15px'
@@ -37,12 +23,28 @@ const Container = styled.div`
   &:hover {
     cursor: pointer;
   }
+  z-index: 1;
+`;
+
+const Gradient = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background-image: linear-gradient(
+    0deg,
+    rgb(0, 0, 0, 0.8),
+    rgb(255, 255, 255, 0)
+  );
 `;
 
 const ImageContainer = styled.div`
   height: 100%;
   width: 100%;
-  /* border-radius: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,49 +67,33 @@ const Placeholder = styled.div`
   }
 `;
 
-export const MealCard = props => {
-  const [hover, setHover] = useState(false);
+export const MealCard = ({ onClick, active, img, name, season }) => {
   return (
-    <Container
-      onClick={() => props.onClick()}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      active={props.active}
-    >
-      <ImageContainer>
-        {props.img ? (
-          <Image
-            src={props.img}
-            alt="meal image"
-            layout="fill"
-            objectFit="cover"
-          />
-        ) : (
-          <Placeholder>
-            <Image src={ph} alt="meal" />
-          </Placeholder>
-        )}
-      </ImageContainer>
+    <Container onClick={() => onClick()} active={active}>
+      <Gradient>
+        <ImageContainer>
+          {img ? (
+            <Image src={img} alt="meal image" layout="fill" objectFit="cover" />
+          ) : (
+            <Placeholder>
+              <Image src={ph} alt="meal" />
+            </Placeholder>
+          )}
+        </ImageContainer>
 
-      {/* <Background
-                hover={hover}
-                secondary={props.secondary}
-            > */}
+        <H4
+          color={colors.white}
+          margin="0px 0 0 0"
+          fontSize={FontSizes.Regular}
+          textAlign="center"
+        >
+          {name || 'Meal Name'}
+        </H4>
 
-      <H4
-        color={colors.white}
-        margin="0px 0 0 0"
-        fontSize={FontSizes.Regular}
-        textAlign="center"
-      >
-        {props.name || 'Meal Name'}
-      </H4>
-
-      <Text color="#B4DFA8" fontSize={FontSizes.Smaller}>
-        {props.season}
-      </Text>
-
-      {/* </Background> */}
+        <Text color="#B4DFA8" fontSize={FontSizes.Smaller}>
+          {season}
+        </Text>
+      </Gradient>
     </Container>
   );
 };
