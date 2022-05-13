@@ -17,7 +17,7 @@ export const createMeal = async (token: String) => {
 };
 
 export const updateMeal = async (id: any, data: Object, token: String) => {
-  const url = `${apiEndpoint}meals/${id}`;
+  const url = `http://localhost:8080/meals/${id}`;
   try {
     const response = await Api.put(url, data, token);
     return response;

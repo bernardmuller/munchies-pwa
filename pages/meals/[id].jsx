@@ -54,7 +54,7 @@ const MealDetail = ({ data, onClose }) => {
     <Container>
       <Header
         heading="Meal Detail"
-        onLeftButtonClick={() => router.back()}
+        onLeftButtonClick={() => router.push('/meals')}
         onRightButtonClick={() => setShowConfirmation(true)}
         RightIcon={IoTrashOutline}
         LeftIcon={IoArrowBackOutline}

@@ -26,8 +26,15 @@ const Wrapper = styled.div`
 
 const NameForm = styled.form`
   display: flex;
+  width: 100%;
   align-items: center;
   margin-top: 0.5rem;
+  justify-content: space-between;
+  gap: 2rem;
+
+  & > div {
+    display: flex;
+  }
 `;
 
 const StatsContainer = styled.div`
@@ -160,17 +167,14 @@ const Name = ({ data, onReload }) => {
   return (
     <Wrapper>
       {!edit ? (
-        <>
-          <H2
-            color={colors.white}
-            fontSize={FontSizes.Big}
-            margin="0.6rem 0 0 0"
-            onClick={() => setEdit(true)}
-          >
-            {name}
-          </H2>
-          {hover && !edit && <EditButton onClick={() => setEdit(true)} />}
-        </>
+        <H2
+          color={colors.white}
+          fontSize={FontSizes.Big}
+          margin="0.6rem 0 0 0"
+          onClick={() => setEdit(true)}
+        >
+          {name}
+        </H2>
       ) : (
         <NameForm onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -183,8 +187,10 @@ const Name = ({ data, onReload }) => {
               },
             })}
           />
-          <SaveButton />
-          <CancelButton onClick={() => setEdit(false)} />
+          <div>
+            <SaveButton />
+            <CancelButton onClick={() => setEdit(false)} />
+          </div>
         </NameForm>
       )}
     </Wrapper>
@@ -275,7 +281,6 @@ const Seasons = ({ id, onReload, meal }) => {
           {seasons.length > 0 ? (
             <Wrapper>
               <Tags tags={seasons} />
-              {hover && !edit && <EditButton onClick={() => setEdit(true)} />}
             </Wrapper>
           ) : (
             <Button

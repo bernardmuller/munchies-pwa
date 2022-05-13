@@ -105,13 +105,6 @@ export async function getServerSideProps(context) {
 
   const data = await getMeals(token);
 
-  // const meals = response.data.map((meal) => ({
-  //     img: meal.image,
-  //     name : meal.name,
-  //     _id: meal._id.toString(),
-  //     seasons: meal.seasons
-  // }));
-
   return {
     props: {
       data,
