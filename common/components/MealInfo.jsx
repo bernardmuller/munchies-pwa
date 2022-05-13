@@ -147,12 +147,11 @@ const UploadButtonWrapper = styled.form`
 const Name = ({ data, onReload }) => {
   const { register, handleSubmit } = useForm();
   const [edit, setEdit] = useState(false);
-  const [hover, setHover] = useState(false);
   const [name, setName] = useState(data.name);
   const token = getCookie('token');
 
-  const handleUpdateName = async name => {
-    await updateMeal(data._id, name, token)
+  const handleUpdateName = async nameData => {
+    await updateMeal(data._id, nameData, token)
       .then(async () => {
         setEdit(false);
         onReload();
@@ -160,8 +159,8 @@ const Name = ({ data, onReload }) => {
       .catch(err => console.log(err));
   };
 
-  const onSubmit = name => {
-    handleUpdateName(name);
+  const onSubmit = nameData => {
+    handleUpdateName(nameData);
   };
 
   return (
@@ -259,14 +258,13 @@ const MealStats = ({ meal }) => {
 };
 
 const Seasons = ({ id, onReload, meal }) => {
-  const [seasons, setSeasons] = useState(meal.seasons);
+  const [seasonsData, setSeasons] = useState(meal.seasons);
   const [edit, setEdit] = useState(false);
-  const [hover, setHover] = useState(false);
   const token = getCookie('token');
 
   const handleUpdateSeason = async e => {
     e.preventDefault();
-    await updateMeal(id, { seasons: seasons }, token)
+    await updateMeal(id, { seasons: seasonsData }, token)
       .then(async () => {
         setEdit(false);
         onReload();
@@ -278,9 +276,9 @@ const Seasons = ({ id, onReload, meal }) => {
     <Container>
       {!edit ? (
         <Container>
-          {seasons.length > 0 ? (
+          {seasonsData.length > 0 ? (
             <Wrapper>
-              <Tags tags={seasons} />
+              <Tags tags={seasonsData} />
             </Wrapper>
           ) : (
             <Button
@@ -298,7 +296,7 @@ const Seasons = ({ id, onReload, meal }) => {
         <SeasonForm onSubmit={handleUpdateSeason}>
           <Multiselect
             placeholder="Select season/s"
-            value={seasons}
+            value={seasonsData}
             data={['Summer', 'Autumn', 'Winter', 'Spring', 'All Year']}
             onChange={val => setSeasons(val)}
           />

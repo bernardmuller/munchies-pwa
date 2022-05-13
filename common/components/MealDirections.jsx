@@ -36,6 +36,7 @@ const Form = styled.form`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 `;
 
 const Container = styled.div`
@@ -134,10 +135,7 @@ const Item = ({ data, onDelete, onReload }) => {
           onChange={e => setValue(e.target.value)}
         />
         <UtilityWrapper>
-          <SaveButton
-          // onClick={() => {}}
-          />
-
+          <SaveButton />
           <CancelButton onClick={() => setEdit(false)} />
         </UtilityWrapper>
       </ItemContainerForm>
@@ -221,7 +219,6 @@ const AddItem = ({ meal, onReload }) => {
           />
           <UtilityWrapper>
             <SaveButton />
-
             <CancelButton onClick={() => setAdd(false)} />
           </UtilityWrapper>
         </Form>
