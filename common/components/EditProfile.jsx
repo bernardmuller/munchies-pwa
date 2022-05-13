@@ -63,11 +63,12 @@ export const EditProfile = ({ data, onUpdate, showLoader }) => {
         </Flex>
 
         <Group>
-          <Wrapper>
+          <Grid width="100%">
             <Label>Firstname</Label>
             <Input
               placeholder="Firstname"
               value={user.firstname}
+              height="2.5rem"
               onChange={e =>
                 setUser(prev => ({
                   ...prev,
@@ -75,12 +76,13 @@ export const EditProfile = ({ data, onUpdate, showLoader }) => {
                 }))
               }
             />
-          </Wrapper>
-          <Wrapper>
+          </Grid>
+          <Grid width="100%" gap={1}>
             <Label>Lastname</Label>
             <Input
               value={user.lastname}
               placeholder="Lastname"
+              height="2.5rem"
               onChange={e =>
                 setUser(prev => ({
                   ...prev,
@@ -88,27 +90,11 @@ export const EditProfile = ({ data, onUpdate, showLoader }) => {
                 }))
               }
             />
-          </Wrapper>
+          </Grid>
         </Group>
 
-        {/* <Group>
-          <Wrapper>
-            <Label>Profile picture</Label>
-            <Input
-              placeholder="Picture URL"
-              value={user.image}
-              onChange={e =>
-                setUser(prev => ({
-                  ...prev,
-                  image: e.target.value,
-                }))
-              }
-            />
-          </Wrapper>
-        </Group> */}
-
         <Group>
-          <Wrapper>
+          <Grid width="100%" gap={1}>
             <Label>About Me</Label>
             <TextArea
               value={user.bio}
@@ -120,14 +106,14 @@ export const EditProfile = ({ data, onUpdate, showLoader }) => {
                 }))
               }
             />
-          </Wrapper>
+          </Grid>
         </Group>
 
-        <ButtonContainer>
+        <Grid justifyContent="center" mt={3}>
           <Button primary type="submit" justifySelf="center" width="200px">
             Update Profile
           </Button>
-        </ButtonContainer>
+        </Grid>
       </FormContainer>
     </Container>
   );
