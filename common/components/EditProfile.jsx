@@ -18,21 +18,9 @@ const Group = styled.div`
   gap: 1rem;
 `;
 
-const Wrapper = styled.div`
-  display: grid;
-  gap: 0.3rem;
-  width: 100%;
-`;
-
 const Label = styled.label`
   font-size: ${FontSizes.Small};
   color: ${colors.grey_light};
-`;
-
-const ButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
 `;
 
 const FormContainer = styled.div`
