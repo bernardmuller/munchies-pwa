@@ -12,13 +12,10 @@ const ImageContainer = styled.div`
   position: relative;
   background-color: ${colors.grey};
   border-radius: 50%;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Container = styled.div`
@@ -52,6 +49,7 @@ const Placeholder = styled.div`
   justify-content: center;
   background-color: ${colors.grey};
   border-radius: 50%;
+  overflow: hidden;
 
   img {
     padding: 10%;
@@ -64,33 +62,31 @@ const Placeholder = styled.div`
 export const UserInfo = ({ user, loading }) => {
   return (
     <Container>
-      {!loading && user.image ? (
-        <ImageContainer>
+      <ImageContainer>
+        {user.image ? (
           <Image
             src={user.image}
             alt="profile picture"
             layout="fill"
             objectFit="cover"
           />
-        </ImageContainer>
-      ) : (
-        <Placeholder>
-          <Image src={pp} alt="user image" layout="fill" objectFit="cover" />
-        </Placeholder>
-      )}
+        ) : (
+          <Image
+            src={pp}
+            alt="profile picture"
+            objectFit="contain"
+            height="100"
+            width="100"
+          />
+        )}
+      </ImageContainer>
       <H2
         fontSize={FontSizes.Bigger}
         color={colors.white}
         textAlign="center"
         margin="1rem 0 0 0"
       >
-        {!loading ? (
-          user.firstname &&
-          user.lastname &&
-          `${user.firstname || ''} ${user.lastname || ''}`
-        ) : (
-          <Loader spinnerColor={colors.grey_light} size="18px" />
-        )}
+        {user.firstname || 'Firstname'} {user.lastname || 'Lastname'}
       </H2>
 
       <Text
@@ -104,11 +100,7 @@ export const UserInfo = ({ user, loading }) => {
       <StatsContainer>
         <Stat>
           <Text color={colors.white} fontSize={FontSizes.Big}>
-            {!loading ? (
-              user.menus && user.menus.length
-            ) : (
-              <Loader spinnerColor={colors.grey_light} size="18px" />
-            )}
+            {user.menus && user.menus.length}
           </Text>
           <Text color={colors.grey} fontSize={FontSizes.Smaller}>
             Menus
@@ -116,11 +108,7 @@ export const UserInfo = ({ user, loading }) => {
         </Stat>
         <Stat borders>
           <Text color={colors.white} fontSize={FontSizes.Big}>
-            {!loading ? (
-              user.meals && user.meals.length
-            ) : (
-              <Loader spinnerColor={colors.grey_light} size="18px" />
-            )}
+            {user.meals && user.meals.length}
           </Text>
           <Text color={colors.grey} fontSize={FontSizes.Smaller}>
             Meals

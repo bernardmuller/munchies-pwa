@@ -19,6 +19,7 @@ const Container = styled.div`
 
 const Profile = ({ data }) => {
   const [loading, setLoading] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const [user, setUser] = useState(data);
   const activeContext = useContext(ActiveViewContext);
   const router = useRouter();
@@ -26,15 +27,16 @@ const Profile = ({ data }) => {
   const token = getCookie('token');
 
   const fetchUser = async () => {
-    setLoading(true);
     await getUser(user._id, token)
       .then(res => setUser(res))
       .catch(err => console.log(err));
+    setLoading(true);
     setLoading(false);
+    setShowLoader(false);
   };
 
   const handleUpdate = async updateData => {
-    setLoading(true);
+    setShowLoader(true);
     await updateUser(user._id, updateData, token)
       .catch(err => console.log(err))
       .finally(() => fetchUser());
@@ -52,8 +54,17 @@ const Profile = ({ data }) => {
         LeftIcon={IoArrowBackOutline}
         onLeftButtonClick={() => router.back()}
       />
-      <UserInfo user={user} loading={loading} />
-      <EditProfile data={user} onUpdate={handleUpdate} loading={loading} />
+      {!loading && (
+        <>
+          <UserInfo user={user} loading={loading} />
+          <EditProfile
+            data={user}
+            onUpdate={handleUpdate}
+            loading={loading}
+            showLoader={showLoader}
+          />
+        </>
+      )}
     </Container>
   );
 };

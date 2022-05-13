@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FontSizes, colors } from 'common';
 import { H3, Input, TextArea, Button } from 'common/components';
+import { Flex, Grid } from '@chakra-ui/react';
+import { Loader } from './loader';
 
 const Container = styled.form`
   display: grid;
   padding: 0 1.5rem;
   width: 100%;
+  margin-top: 1rem;
 `;
 
 const Group = styled.div`
@@ -41,7 +44,7 @@ const FormContainer = styled.div`
   border-radius: 0.5rem;
 `;
 
-export const EditProfile = ({ data, onUpdate, loading }) => {
+export const EditProfile = ({ data, onUpdate, showLoader }) => {
   const [user, setUser] = useState(data);
 
   const handleSubmit = e => {
@@ -52,16 +55,19 @@ export const EditProfile = ({ data, onUpdate, loading }) => {
   return (
     <Container onSubmit={handleSubmit}>
       <FormContainer>
-        <H3 color={colors.white} margin="0" fontSize={FontSizes.Big}>
-          Edit Profile
-        </H3>
+        <Flex justify="space-between">
+          <H3 color={colors.white} margin="0" fontSize={FontSizes.Big}>
+            Edit Profile
+          </H3>
+          {showLoader && <Loader spinnercolor={colors.white} />}
+        </Flex>
 
         <Group>
           <Wrapper>
-            <Label>First Name</Label>
+            <Label>Firstname</Label>
             <Input
               placeholder="Firstname"
-              value={`${user.firstname}`}
+              value={user.firstname}
               onChange={e =>
                 setUser(prev => ({
                   ...prev,
@@ -71,9 +77,9 @@ export const EditProfile = ({ data, onUpdate, loading }) => {
             />
           </Wrapper>
           <Wrapper>
-            <Label>Last Name</Label>
+            <Label>Lastname</Label>
             <Input
-              value={!loading ? user.lastname : ''}
+              value={user.lastname}
               placeholder="Lastname"
               onChange={e =>
                 setUser(prev => ({
@@ -85,12 +91,12 @@ export const EditProfile = ({ data, onUpdate, loading }) => {
           </Wrapper>
         </Group>
 
-        <Group>
+        {/* <Group>
           <Wrapper>
             <Label>Profile picture</Label>
             <Input
               placeholder="Picture URL"
-              value={!loading ? `${user.image}` : ''}
+              value={user.image}
               onChange={e =>
                 setUser(prev => ({
                   ...prev,
@@ -99,13 +105,13 @@ export const EditProfile = ({ data, onUpdate, loading }) => {
               }
             />
           </Wrapper>
-        </Group>
+        </Group> */}
 
         <Group>
           <Wrapper>
             <Label>About Me</Label>
             <TextArea
-              value={!loading ? `${user.bio}` : ''}
+              value={user.bio}
               placeholder="About Me"
               onChange={e =>
                 setUser(prev => ({
