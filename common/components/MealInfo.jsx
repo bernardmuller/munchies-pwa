@@ -6,7 +6,6 @@ import {
   Button,
   Text,
   SaveButton,
-  EditButton,
   CancelButton,
   Input,
 } from 'common/components';
@@ -22,6 +21,14 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   height: ${props => props.height || ''};
+`;
+
+const TagsWrapper = styled.button`
+  display: flex;
+  align-items: center;
+  height: ${props => props.height || ''};
+  background: none;
+  border: none;
 `;
 
 const NameForm = styled.form`
@@ -277,9 +284,9 @@ const Seasons = ({ id, onReload, meal }) => {
       {!edit ? (
         <Container>
           {seasonsData.length > 0 ? (
-            <Wrapper>
+            <TagsWrapper onClick={() => setEdit(true)}>
               <Tags tags={seasonsData} />
-            </Wrapper>
+            </TagsWrapper>
           ) : (
             <Button
               fontSize={FontSizes.Smaller}
