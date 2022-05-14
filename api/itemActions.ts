@@ -1,9 +1,9 @@
-// import { apiEndpoint } from 'common/constants';
+import { apiEndpoint } from 'common/constants';
 import { Api } from './Api';
 import { resolveRejected } from './apiUtils';
 
 export const checkItem = async (id: String, token: String) => {
-  const url = `http://localhost:8080/items/${id}/check`;
+  const url = `${apiEndpoint}items/${id}/check`;
 
   try {
     const response = await Api.put(url, {}, token);
@@ -18,7 +18,7 @@ export const checkItem = async (id: String, token: String) => {
 };
 
 export const unCheckItem = async (id: String, token: String) => {
-  const url = `http://localhost:8080/items/${id}/uncheck`;
+  const url = `${apiEndpoint}items/${id}/uncheck`;
 
   try {
     const response = await Api.put(url, {}, token);
