@@ -24,7 +24,7 @@ import Link from 'next/link';
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 200vh;
   padding: 0.5rem 1rem;
   background-color: ${colors.secondary_dark};
 `;

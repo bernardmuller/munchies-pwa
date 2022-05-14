@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
-import { PrivateContainer, colors } from 'common';
-import { Header, Loader, EditProfile, UserInfo } from 'common/components';
+import { colors } from 'common';
+import { Header, EditProfile, UserInfo } from 'common/components';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { getUser, updateUser } from 'api';
 import { getCookie } from 'cookies-next';
@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 150vh;
   display: flex;
   flex-direction: column;
   gap: 1rem;

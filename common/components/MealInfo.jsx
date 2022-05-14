@@ -246,7 +246,7 @@ const MealStats = ({ meal }) => {
       </Stat>
       <Stat borders>
         <Text color={colors.white} fontSize={FontSizes.Big} margin="0">
-          20
+          N/A
         </Text>
         <Text color={colors.grey} fontSize={FontSizes.Smaller} margin="0">
           Prep time
@@ -254,7 +254,7 @@ const MealStats = ({ meal }) => {
       </Stat>
       <Stat>
         <Text color={colors.white} fontSize={FontSizes.Big} margin="0">
-          40
+          N/A
         </Text>
         <Text color={colors.grey} fontSize={FontSizes.Smaller} margin="0">
           Serve in

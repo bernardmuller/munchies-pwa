@@ -1,9 +1,4 @@
-import {
-  IoFastFood,
-  IoCalendar,
-  IoLogOut,
-  IoSettingsSharp,
-} from 'react-icons/io5';
+import { IoFastFood, IoCalendar, IoSettingsSharp } from 'react-icons/io5';
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { colors } from 'common';
@@ -18,7 +13,6 @@ const NavContainer = styled.div`
   min-height: 5.5rem;
   z-index: 900;
   background-color: ${colors.secondary_dark};
-  /* padding: 0.5rem 0 0.5rem 0; */
 
   @media ${DeviceMediaQueries.laptop} {
     flex-direction: column;
@@ -72,20 +66,6 @@ export const Nav = () => {
   const activeContext = useContext(ActiveViewContext);
   const { active } = activeContext.state;
 
-  async function handleLogout() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    await fetch('https://munchies-api-5fqmkwna4q-nw.a.run.app/logout', {
-      method: 'POST',
-      mode: 'cors',
-      redirect: 'follow',
-      withCredentials: true,
-      credentials: 'include',
-      headers,
-    });
-  }
-
   useEffect(() => {
     if (active === 'MENUS') {
       setMenuActive(true);
@@ -128,12 +108,6 @@ export const Nav = () => {
           active={profileActive}
         />
       </NavOptions>
-
-      <Settings>
-        <button type="button" onClick={handleLogout} style={{ width: '100%' }}>
-          <NavOption title="Logout" Icon={IoLogOut} onClick={handleLogout} />
-        </button>
-      </Settings>
     </NavContainer>
   );
 };

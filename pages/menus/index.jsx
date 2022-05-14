@@ -106,11 +106,9 @@ const Menus = ({ data }) => {
 
   useEffect(() => {
     activeContext.dispatch({ type: 'MENUS' });
-    fetchMenus().then(() => console.log('fetched'));
+    fetchMenus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => {
-      console.log('exit menus');
-    };
+    return () => {};
   }, []);
 
   return (

@@ -31,6 +31,7 @@ const Container = styled.div`
 
 function Meals({ data }) {
   const token = getCookie('token');
+  const [creating, setCreating] = useState(false);
   const router = useRouter();
   const [meals, setMeals] = useState(data);
 
@@ -39,14 +40,18 @@ function Meals({ data }) {
   const fetchData = async () => {
     const res = await getMeals(token);
     setMeals(res);
+    setCreating(false);
   };
 
   useEffect(() => {
     activeContext.dispatch({ type: 'MEALS' });
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {};
   }, []);
 
   const handleCreateMeal = async () => {
+    setCreating(true);
     const res = await createMeal(token);
     if (res) fetchData();
   };
@@ -61,6 +66,7 @@ function Meals({ data }) {
           heading="My Meals"
           onRightButtonClick={() => handleCreateMeal()}
           RightIcon={IoAdd}
+          loading={creating}
         />
         <MealsContainer>
           {meals.length > 0 ? (
