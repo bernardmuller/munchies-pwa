@@ -120,37 +120,37 @@ const Name = ({ name, onRename }) => {
   );
 };
 
-const Period = () => {
-  const [edit, setEdit] = useState(false);
-  const [hover, setHover] = useState(false);
-  return (
-    <TitleWrapper
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      height="2rem"
-    >
-      {!edit ? (
-        <>
-          <Text fontSize={FontSizes.Small} color={colors.grey_dark}>
-            Menu period / Date
-          </Text>
+// const Period = () => {
+//   const [edit, setEdit] = useState(false);
+//   const [hover, setHover] = useState(false);
+//   return (
+//     <TitleWrapper
+//       onMouseEnter={() => setHover(true)}
+//       onMouseLeave={() => setHover(false)}
+//       height="2rem"
+//     >
+//       {!edit ? (
+//         <>
+//           <Text fontSize={FontSizes.Small} color={colors.grey_dark}>
+//             Menu period / Date
+//           </Text>
 
-          {hover && !edit && <EditButton onClick={() => setEdit(true)} />}
-        </>
-      ) : (
-        <NameForm>
-          <Input type="date" height="2.5rem" />
-          <Text color={colors.grey_light} margin="0 0.5rem 0 0.5rem">
-            to
-          </Text>
-          <Input type="date" height="2.5rem" />
-          <SaveButton onClick={() => {}} />
-          <CancelButton onClick={() => setEdit(false)} />
-        </NameForm>
-      )}
-    </TitleWrapper>
-  );
-};
+//           {hover && !edit && <EditButton onClick={() => setEdit(true)} />}
+//         </>
+//       ) : (
+//         <NameForm>
+//           <Input type="date" height="2.5rem" />
+//           <Text color={colors.grey_light} margin="0 0.5rem 0 0.5rem">
+//             to
+//           </Text>
+//           <Input type="date" height="2.5rem" />
+//           <SaveButton onClick={() => {}} />
+//           <CancelButton onClick={() => setEdit(false)} />
+//         </NameForm>
+//       )}
+//     </TitleWrapper>
+//   );
+// };
 
 const MenuDetail = ({ data }) => {
   const token = getCookie('token');
@@ -221,7 +221,7 @@ const MenuDetail = ({ data }) => {
           onRename={handleRename}
         />
 
-        <Period period={{}} />
+        {/* <Period period={{}} /> */}
 
         <Text color={colors.grey} fontSize={FontSizes.Small} margin="0">
           Creator: {(menu && menu.createdBy.firstname) || 'username'}
