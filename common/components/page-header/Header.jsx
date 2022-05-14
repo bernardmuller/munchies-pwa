@@ -62,7 +62,7 @@ export const Header = ({
           </HeaderButton>
         )}
       </LeftContainer>
-      <Text color={colors.grey_dark} fontSize={FontSizes.Small}>
+      <Text color={colors.grey_dark} fontSize={FontSizes.Regular}>
         {loading ? (
           <Loader spinnerColor={colors.white} size="22px" />
         ) : (

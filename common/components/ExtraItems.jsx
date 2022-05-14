@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { addExtraItem } from 'api';
 import { checkItem, unCheckItem } from 'api/itemActions';
 import { getCookie } from 'cookies-next';
+import { Loader } from './loader';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -177,9 +178,15 @@ const AddItem = ({ menuId, onReload }) => {
   } = useForm();
   const [add, setAdd] = useState(false);
   const token = getCookie('token');
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async data => {
-    await addExtraItem(menuId, data, token).then(() => onReload());
+    setLoading(true);
+    await addExtraItem(menuId, data, token)
+      .then(() => onReload())
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -199,7 +206,7 @@ const AddItem = ({ menuId, onReload }) => {
             {...register('name', {})}
           />
           <UtilityWrapper>
-            <SaveButton onClick={() => {}} />
+            {loading ? <Loader spinnerColor={colors.grey} /> : <SaveButton />}
 
             <CancelButton onClick={() => setAdd(false)} />
           </UtilityWrapper>
