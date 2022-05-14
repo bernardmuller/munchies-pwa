@@ -79,7 +79,7 @@ export const deleteMenu = async (id: any, token: String) => {
 };
 
 export const addMealsToMenu = async (id: any, data: Object, token: String) => {
-  const url = `h${apiEndpoint}menus/${id}/meals`;
+  const url = `${apiEndpoint}menus/${id}/meals`;
 
   try {
     const response = await Api.post(url, data, token);
