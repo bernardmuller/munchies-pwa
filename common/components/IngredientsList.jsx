@@ -42,6 +42,7 @@ const ItemName = styled.span`
 
 const Item = ({ data }) => {
   const [checked, setChecked] = useState(false);
+  const [hover, setHover] = useState(false);
 
   return (
     <ItemWrapper onClick={() => {}} checked={checked}>
@@ -66,25 +67,6 @@ const Item = ({ data }) => {
       >
         {data || 'name'}
       </ItemName>
-
-      {/* <Text>
-                {props.data}
-            </Text> */}
-      {/* {hover &&
-                <UtilButton
-                    onClick={() => setShowMenu(prev => !prev)}
-                >
-                    <IoEllipsisVerticalSharp 
-                        size={22}
-                        color={colors.white}
-                    />
-                    {showMenu &&
-                        <OptionsMenu 
-                            onMouseOff={() => setShowMenu(false)}
-                        />
-                    }
-                </UtilButton>
-            } */}
     </ItemWrapper>
   );
 };

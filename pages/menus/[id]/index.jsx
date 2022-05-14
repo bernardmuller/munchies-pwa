@@ -18,7 +18,7 @@ import { IoTrashOutline, IoArrowBackOutline } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
 import { getMenu, deleteMenu, updateMenu } from 'api';
 import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import Link from 'next/link';
 
@@ -82,6 +82,11 @@ const Name = ({ name, onRename }) => {
     setEdit(false);
   };
 
+  const onSubmit = data => {
+    onRename(data);
+    setEdit(false);
+  };
+
   return (
     <TitleWrapper>
       {!edit ? (
@@ -94,11 +99,11 @@ const Name = ({ name, onRename }) => {
           {menuName || 'menu name'}
         </H2>
       ) : (
-        <NameForm onSubmit={handleSubmit(onRename)}>
+        <NameForm onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="Menu name"
             height="2.5rem"
-            value={name}
+            value={menuName}
             {...register('name', {
               onChange: e => {
                 setMenuName(e.target.value);
@@ -159,11 +164,11 @@ const MenuDetail = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const removeMeal = async () => {
+  const removeMenu = async () => {
     setShowConfirmation(false);
     setLoading(true);
     await deleteMenu(menu._id, token).then(() => {
-      router.push('/meals');
+      router.push('/menus');
       setLoading(false);
     });
   };
@@ -175,10 +180,12 @@ const MenuDetail = ({ data }) => {
   };
 
   const handleRename = async renameData => {
+    setLoading(true);
     await updateMenu(menu._id, renameData, token).catch(err =>
       console.log(err)
     );
     await fetchMenu(menu._id, token);
+    setLoading(false);
   };
 
   return (
@@ -195,12 +202,16 @@ const MenuDetail = ({ data }) => {
       {showConfirmation && (
         <Confirmation
           text="Are you sure you want to delete this meal?"
-          onConfirm={removeMeal}
+          onConfirm={removeMenu}
           onCancel={() => setShowConfirmation(false)}
         />
       )}
       <Content>
-        <Name name={menu && menu.name} onRename={handleRename} />
+        <Name
+          name={menu && menu.name}
+          loading={loading}
+          onRename={handleRename}
+        />
 
         <Period period={{}} />
 

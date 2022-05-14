@@ -22,7 +22,7 @@ export const updateIngredient = async (
 };
 
 export const getIngredients = async (token: String) => {
-  const url = `${apiEndpoint}ingredients`;
+  const url = `http://localhost:8080/ingredients`;
 
   try {
     const response = await Api.get(url, token);

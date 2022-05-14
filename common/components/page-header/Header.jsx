@@ -64,7 +64,7 @@ export const Header = ({
       </LeftContainer>
       <Text color={colors.grey_dark} fontSize={FontSizes.Small}>
         {loading ? (
-          <Loader spinnerColor={colors.primary} size="22px" />
+          <Loader spinnerColor={colors.white} size="22px" />
         ) : (
           heading || 'MUNCHIES'
         )}

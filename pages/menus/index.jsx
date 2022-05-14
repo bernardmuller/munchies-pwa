@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { Text, CancelButton, Header, Confirmation } from 'common/components';
+import { Header, Text } from 'common/components';
 import { colors, FontSizes, PrivateContainer } from 'common';
 import { getMenus, createMenu, deleteMenu } from 'api';
 import { IoAdd, IoDocumentText } from 'react-icons/io5';
@@ -53,60 +53,36 @@ const Container = styled.div`
   /* background-color: ${colors.white}; */
 `;
 
-const MenuButton = ({ menu, onDelete, onClick }) => {
-  const [menuHover, setMenuHover] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+const MenuButton = ({ menu, onClick }) => {
   const count = menu.meals.length;
   return (
-    <>
-      {/* {showConfirmation && (
-        <Confirmation
-          text={`Are you sure you want to delete "${menu.name}"?`}
-          onConfirm={() => {
-            onDelete();
-            setShowConfirmation(false);
-          }}
-          onCancel={() => setShowConfirmation(false)}
-        />
-      )} */}
-      <Wrapper
-        // onMouseEnter={() => setMenuHover(true)}
-        // onMouseLeave={() => setMenuHover(false)}
-        height="3rem"
-        onClick={() => onClick()}
+    <Wrapper height="3rem" onClick={() => onClick()}>
+      <IoDocumentText size="1.4rem" color={colors.primary_dark} />
+      <Menu>{menu.name}</Menu>
+      <Text
+        fontSize={FontSizes.Small}
+        color={colors.grey_dark}
+        style={{
+          backgroundColor: colors.secondary,
+          width: '1.5rem',
+          minWidth: '1.5rem',
+          height: '1.5rem',
+          minHeight: '1.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '8px',
+        }}
       >
-        <IoDocumentText size="1.4rem" color={colors.primary_dark} />
-        <Menu>{menu.name}</Menu>
-        {/* {menuHover && (
-          <CancelButton
-            color={colors.danger}
-            onClick={() => setShowConfirmation(true)}
-          />
-        )} */}
-        <Text
-          fontSize={FontSizes.Small}
-          color={colors.grey_dark}
-          style={{
-            backgroundColor: colors.secondary,
-            width: '1.5rem',
-            minWidth: '1.5rem',
-            height: '1.5rem',
-            minHeight: '1.5rem',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: '8px',
-          }}
-        >
-          {count}
-        </Text>
-      </Wrapper>
-    </>
+        {count}
+      </Text>
+    </Wrapper>
   );
 };
 
 const Menus = ({ data }) => {
   const [menus, setMenus] = useState(data);
+  const [loading, setLoading] = useState(false);
   const token = getCookie('token');
   const router = useRouter();
   const activeContext = useContext(ActiveViewContext);
@@ -115,15 +91,13 @@ const Menus = ({ data }) => {
     await getMenus(token)
       .then(res => setMenus(res))
       .catch(err => console.log(err));
+    setLoading(true);
+    setLoading(false);
   };
 
   const newMenu = async () => {
+    setLoading(true);
     await createMenu(token).catch(err => console.log(err));
-    fetchMenus();
-  };
-
-  const removeMenu = async id => {
-    await deleteMenu(id, token).catch(err => console.log(err));
     fetchMenus();
   };
 
@@ -138,24 +112,28 @@ const Menus = ({ data }) => {
         <title>Munchies - Menus</title>
       </Head>
       <Container>
-        <Header
-          heading="My Menus"
-          onRightButtonClick={() => newMenu()}
-          RightIcon={IoAdd}
-        />
-        <MenusContainer>
-          {menus &&
-            menus.map(menu => (
-              <MenuButton
-                menu={menu}
-                key={Math.random()}
-                onClick={() => {
-                  router.push(`/menus/${menu._id}`);
-                }}
-                onDelete={() => removeMenu(menu._id)}
-              />
-            ))}
-        </MenusContainer>
+        {!loading && (
+          <>
+            <Header
+              heading="My Menus"
+              onRightButtonClick={() => newMenu()}
+              RightIcon={IoAdd}
+              loading={loading}
+            />
+            <MenusContainer>
+              {menus &&
+                menus.map(menu => (
+                  <MenuButton
+                    menu={menu}
+                    key={Math.random()}
+                    onClick={() => {
+                      router.push(`/menus/${menu._id}`);
+                    }}
+                  />
+                ))}
+            </MenusContainer>
+          </>
+        )}
       </Container>
     </PrivateContainer>
   );

@@ -17,8 +17,8 @@ export const createMenu = async (token: String) => {
   }
 };
 
-export const updateMenu = async (id: any, data: Object, token: String) => {
-  const url = `${apiEndpoint}menus/${id}`;
+export const updateMenu = async (id: String, data: Object, token: String) => {
+  const url = `http://localhost:8080/menus/${id}`;
 
   try {
     const response = await Api.put(url, data, token);
@@ -64,7 +64,7 @@ export const getMenu = async (id: String, token: String) => {
 };
 
 export const deleteMenu = async (id: any, token: String) => {
-  const url = `${apiEndpoint}menus/${id}`;
+  const url = `http://localhost:8080/menus/${id}`;
 
   try {
     const response = await Api.delete(url, token);

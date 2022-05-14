@@ -24,6 +24,7 @@ import {
   addIngredient,
 } from 'api';
 import { getCookie } from 'cookies-next';
+import { Grid } from '@chakra-ui/react';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -80,16 +81,15 @@ const DirectionsForm = styled.form`
   width: 100%;
 `;
 
-const Items = styled.div`
-  width: 100%;
-`;
-
 const ItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 1.6rem;
-  padding: 0 0 0 0.5rem;
+  height: 2.5rem;
+  padding: 0 0 0 1rem;
+  background-color: ${colors.secondary_light};
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 
 const ItemContainerForm = styled.form`
@@ -98,6 +98,7 @@ const ItemContainerForm = styled.form`
   align-items: center;
   height: 2.5rem;
   padding: 0 0 0 1rem;
+  gap: 1rem;
 `;
 
 const Item = ({ data, onDelete, onReload }) => {
@@ -135,7 +136,7 @@ const Item = ({ data, onDelete, onReload }) => {
           onChange={e => setValue(e.target.value)}
         />
         <UtilityWrapper>
-          <SaveButton />
+          {loading ? <Loader /> : <SaveButton />}
           <CancelButton onClick={() => setEdit(false)} />
         </UtilityWrapper>
       </ItemContainerForm>
@@ -144,18 +145,13 @@ const Item = ({ data, onDelete, onReload }) => {
 
   return (
     <ItemContainer
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onClick={() => setHover(true)}
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
     >
-      {loading ? (
-        <Loader spinnerColor={colors.white} />
-      ) : (
-        <Text fontSize={FontSizes.Small} color={colors.grey}>
-          {data.name}
-        </Text>
-      )}
+      <Text fontSize={FontSizes.Small} color={colors.grey}>
+        {data.name}
+      </Text>
 
       {hover && !edit && (
         <UtilityWrapper>
@@ -247,7 +243,6 @@ export const MealDirections = ({ onReload, onDelete, meal }) => {
       .then(data => setIngredients(data.ingredients))
       .catch(err => console.log(err));
   };
-
   const handleDeleteIngredient = async id => {
     await removeIngredient(meal._id, id, token)
       .then(async () => {
@@ -287,7 +282,7 @@ export const MealDirections = ({ onReload, onDelete, meal }) => {
             Ingredients
           </H3>
         </Header>
-        <Items>
+        <Grid gap={2}>
           {ingredients &&
             ingredients.map(item => (
               <Item
@@ -299,7 +294,7 @@ export const MealDirections = ({ onReload, onDelete, meal }) => {
             ))}
 
           <AddItem meal={meal} onReload={() => fetchIngredients(token)} />
-        </Items>
+        </Grid>
       </SubContainer>
 
       <SubContainer>
@@ -312,11 +307,7 @@ export const MealDirections = ({ onReload, onDelete, meal }) => {
           <Steps>
             {directions &&
               directions.map((step, index) => (
-                <Step
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
-                  key={step}
-                >
+                <Step key={step}>
                   {!edit ? (
                     <>
                       <Text color="#ABBBC2" fontSize={FontSizes.Small}>
