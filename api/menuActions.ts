@@ -49,7 +49,7 @@ export const getMenus = async (token: String) => {
 };
 
 export const getMenu = async (id: String, token: String) => {
-  const url = `${apiEndpoint}menus/${id}`;
+  const url = `http://localhost:8080/menus/${id}`;
 
   try {
     const response = await Api.get(url, token);
@@ -79,7 +79,22 @@ export const deleteMenu = async (id: any, token: String) => {
 };
 
 export const addMealsToMenu = async (id: any, data: Object, token: String) => {
-  const url = `${apiEndpoint}menus/${id}/meals`;
+  const url = `http://localhost:8080/menus/${id}/meals`;
+
+  try {
+    const response = await Api.post(url, data, token);
+    return response;
+  } catch (ex: any) {
+    const ret = resolveRejected(ex);
+    if (ex && ex.response && ex.response.status === 401) {
+      ret.message = 'Something went wrong';
+    }
+    return ret;
+  }
+};
+
+export const addExtraItem = async (id: String, data: Object, token: String) => {
+  const url = `http://localhost:8080/menus/${id}/extra`;
 
   try {
     const response = await Api.post(url, data, token);

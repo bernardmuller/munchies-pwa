@@ -349,7 +349,11 @@ export const MealDirections = ({ onReload, onDelete, meal }) => {
               ))}
           </Steps>
           {!addStep ? (
-            <Button inline onClick={() => setAddStep(true)}>
+            <Button
+              inline
+              onClick={() => setAddStep(true)}
+              style={{ marginBottom: '2rem' }}
+            >
               <Text fontSize={FontSizes.Smaller} color={colors.grey_dark}>
                 + Add Step
               </Text>

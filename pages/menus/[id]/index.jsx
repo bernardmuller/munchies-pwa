@@ -18,13 +18,13 @@ import { IoTrashOutline, IoArrowBackOutline } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
 import { getMenu, deleteMenu, updateMenu } from 'api';
 import { getCookie } from 'cookies-next';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import Link from 'next/link';
 
 const Container = styled.div`
   width: 100%;
-  height: 200vh;
+  height: 100%;
   padding: 0.5rem 1rem;
   background-color: ${colors.secondary_dark};
 `;
@@ -60,15 +60,15 @@ const WeekContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: scroll;
-  padding: 1rem 1rem;
+  padding: 0rem 0.5rem;
   border-radius: 8px;
+  margin-bottom: 1rem;
 `;
 
 const MealsContainer = styled.div`
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
-  padding-right: 2rem;
+  padding-bottom: 1rem;
 `;
 
 const Name = ({ name, onRename }) => {
@@ -162,6 +162,7 @@ const MenuDetail = ({ data }) => {
   useEffect(() => {
     activeContext.dispatch({ type: 'MEALS' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {};
   }, []);
 
   const removeMenu = async () => {
@@ -187,6 +188,14 @@ const MenuDetail = ({ data }) => {
     await fetchMenu(menu._id, token);
     setLoading(false);
   };
+
+  const handleReload = async () => {
+    setLoading(true);
+    await fetchMenu();
+    setLoading(false);
+  };
+
+  console.log(JSON.stringify(menu.grocerylist.meal_items, null, 2));
 
   return (
     <Container>
@@ -229,7 +238,7 @@ const MenuDetail = ({ data }) => {
         </Link>
       </Wrapper>
 
-      <WeekContainer style={menu.meals.length < 1 && { display: 'none' }}>
+      <WeekContainer>
         <MealsContainer>
           {menu &&
             menu.meals.map(meal => (
@@ -238,16 +247,21 @@ const MenuDetail = ({ data }) => {
                 name={meal.name || 'Meal Name'}
                 season="Season"
                 count={2}
-                key={meal}
+                key={meal + Math.random * 2}
                 secondary
-                onClick={() => {}}
+                onClick={() => router.push(`/meals/${meal._id}`)}
               />
             ))}
         </MealsContainer>
       </WeekContainer>
 
-      <Content>
-        <GroceryList meal_items={menu.grocerylist.meal_items} />
+      <Content style={{ marginBottom: '40rem' }}>
+        <GroceryList
+          mealItems={menu.grocerylist.meal_items}
+          extraItems={menu.grocerylist.extra_items}
+          menuId={menu._id}
+          onReload={handleReload}
+        />
       </Content>
     </Container>
   );

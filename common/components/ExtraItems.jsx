@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   Text,
@@ -14,6 +14,9 @@ import {
   IoCheckbox,
 } from 'react-icons/io5';
 import { useForm } from 'react-hook-form';
+import { addExtraItem } from 'api';
+import { checkItem, unCheckItem } from 'api/itemActions';
+import { getCookie } from 'cookies-next';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -112,22 +115,42 @@ const OptionsMenu = () => {
   );
 };
 
-const Item = ({ data }) => {
+const Item = ({ item }) => {
   const [hover, setHover] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [checked, setChecked] = useState(false);
+  const token = getCookie('token');
+
+  const handleCheck = async itemData => {
+    setChecked(prev => !prev);
+    if (itemData.check) {
+      unCheckItem(item._id, token);
+    } else {
+      checkItem(itemData._id, token);
+    }
+  };
+
+  useEffect(() => {
+    if (item.check) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+    return () => {};
+  }, []);
+
   return (
     <ItemWrapper checked={checked}>
       {checked ? (
         <IoCheckbox
           color={colors.primary}
-          onClick={() => setChecked(prev => !prev)}
+          onClick={() => handleCheck(item)}
           size={22}
         />
       ) : (
         <IoCheckboxOutline
           color={colors.grey_light}
-          onClick={() => setChecked(prev => !prev)}
+          onClick={() => handleCheck(item)}
           size={22}
         />
       )}
@@ -137,7 +160,7 @@ const Item = ({ data }) => {
         margin="0 0 0 0.5rem"
         checked={checked}
       >
-        {data.name || 'name'}
+        {item.name || 'item name'}
       </ItemName>
 
       {hover && (
@@ -150,12 +173,17 @@ const Item = ({ data }) => {
   );
 };
 
-const AddItem = () => {
-  const { handleSubmit } = useForm();
+const AddItem = ({ menuId, onReload }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [add, setAdd] = useState(false);
+  const token = getCookie('token');
 
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async data => {
+    await addExtraItem(menuId, data, token).then(() => onReload());
   };
 
   return (
@@ -168,7 +196,12 @@ const AddItem = () => {
         </Button>
       ) : (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Input height="2rem" width="20rem" placeholder="Item Name" />
+          <Input
+            height="2rem"
+            width=""
+            placeholder="Item Name"
+            {...register('name', {})}
+          />
           <UtilityWrapper>
             <SaveButton onClick={() => {}} />
 
@@ -180,7 +213,7 @@ const AddItem = () => {
   );
 };
 
-export const ExtraItems = ({ name, data }) => {
+export const ExtraItems = ({ name, menuId, extraItems, onReload }) => {
   return (
     <Container>
       <Text
@@ -191,10 +224,10 @@ export const ExtraItems = ({ name, data }) => {
         {name}
       </Text>
       <ItemsContainer>
-        {data.map(item => (
-          <Item key={item + Math.random()} data={item} />
+        {extraItems.map(item => (
+          <Item key={item + Math.random()} item={item} />
         ))}
-        <AddItem />
+        <AddItem menuId={menuId} onReload={onReload} />
       </ItemsContainer>
     </Container>
   );

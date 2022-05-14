@@ -1,110 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { H3 } from 'common/components';
 import { colors, FontSizes } from 'common';
 import mealimg from 'assets/images/meal.png';
-import { MealCard, Button, Text } from 'common/components';
+import { MealCard, Button, Text, H3 } from 'common/components';
 import { getMeals, addMealsToMenu } from 'api';
 import { Loader } from 'common/components/loader/Loader';
-
-export const AddMealsTab = props => {
-  const [meals, setMeals] = useState(props.meals);
-  const [fetching, setFetching] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [newMeals, setNewMeals] = useState([]);
-
-  const addMeal = id => {
-    let temp = newMeals;
-    temp.push(id);
-    setNewMeals(temp);
-    console.log(temp);
-  };
-
-  const saveNewMeals = async () => {
-    setLoading(true);
-    await addMealsToMenu(props.id, { meals: newMeals })
-      .then(() => props.onCancel())
-      .catch(err => console.log(err));
-    setLoading(false);
-  };
-
-  // useEffect(async() => {
-  //     setFetching(true);
-  //     await getMeals()
-  //     .then(data => setMeals(data))
-  //     .catch((err) => console.log(err))
-  //     setFetching(false);
-  // }, [])
-
-  return (
-    <Container>
-      <Header>
-        <H3 color={colors.grey}>Add Meals</H3>
-
-        <ButtonsContainer>
-          <Button secondary width="120px" onClick={() => props.onCancel()}>
-            Cancel
-          </Button>
-
-          <Button primary width="120px" onClick={saveNewMeals}>
-            {loading ? (
-              <Loader spinnerColor={colors.white} size="20px" />
-            ) : (
-              <Text fontSize={FontSizes.Small} color={colors.white}>
-                Save
-              </Text>
-            )}
-          </Button>
-        </ButtonsContainer>
-      </Header>
-      <MealsContainer>
-        {!fetching ? (
-          <>
-            {meals.length > 0 ? (
-              meals &&
-              meals.map((meal, index) => (
-                <MealCard
-                  img={meal.image || mealimg}
-                  name={meal.name}
-                  season={meal.season}
-                  count={2}
-                  key={index}
-                  secondary
-                  onClick={() => {
-                    addMeal(meal._id);
-                  }}
-                />
-              ))
-            ) : (
-              <Container>
-                <Text fontSize={FontSizes.Small} color={colors.grey}>
-                  Yout do not have any meals in your collection to add to a
-                  menu.
-                </Text>
-              </Container>
-            )}
-          </>
-        ) : (
-          <Loader spinnerColor={colors.grey} />
-        )}
-      </MealsContainer>
-    </Container>
-  );
-};
-
-export async function getServerSideProps(context) {
-  const req = context.req;
-  const res = context.res;
-  const token = getCookie('token', { req, res });
-
-  const meals = await getMeals(token);
-
-  return {
-    props: {
-      meals: meals,
-    },
-  };
-}
+import { getCookie } from 'cookies-next';
 
 const Header = styled.div`
   width: 100%;
@@ -130,3 +31,93 @@ const MealsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 `;
+
+export const AddMealsTab = ({ id, data, onCancel }) => {
+  const [meals, setMeals] = useState(data);
+  const [loading, setLoading] = useState(false);
+  const [newMeals, setNewMeals] = useState([]);
+
+  const addMeal = idData => {
+    const temp = newMeals;
+    temp.push(idData);
+    setNewMeals(temp);
+    console.log(temp);
+  };
+
+  const saveNewMeals = async () => {
+    setLoading(true);
+    await addMealsToMenu(id, { meals: newMeals })
+      .then(() => onCancel())
+      .catch(err => console.log(err));
+    setLoading(false);
+  };
+
+  // useEffect(async() => {
+  //     setFetching(true);
+  //     await getMeals()
+  //     .then(data => setMeals(data))
+  //     .catch((err) => console.log(err))
+  //     setFetching(false);
+  // }, [])
+
+  return (
+    <Container>
+      <Header>
+        <H3 color={colors.grey}>Add Meals</H3>
+
+        <ButtonsContainer>
+          <Button secondary width="120px" onClick={() => onCancel()}>
+            Cancel
+          </Button>
+
+          <Button primary width="120px" onClick={saveNewMeals}>
+            {loading ? (
+              <Loader spinnerColor={colors.white} size="20px" />
+            ) : (
+              <Text fontSize={FontSizes.Small} color={colors.white}>
+                Save
+              </Text>
+            )}
+          </Button>
+        </ButtonsContainer>
+      </Header>
+      <MealsContainer>
+        {meals && meals.length > 0 ? (
+          meals.map(meal => (
+            <MealCard
+              img={meal.image || mealimg}
+              name={meal.name}
+              season={meal.season}
+              count={2}
+              key={meal + Math.random() + Math.random()}
+              secondary
+              onClick={() => {
+                addMeal(meal._id);
+              }}
+            />
+          ))
+        ) : (
+          <Container>
+            <Text fontSize={FontSizes.Small} color={colors.grey}>
+              Yout do not have any meals in your collection to add to a menu.
+            </Text>
+          </Container>
+        )}
+      </MealsContainer>
+    </Container>
+  );
+};
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const { res } = context;
+  const token = getCookie('token', { req, res });
+
+  const meals = await getMeals(token);
+
+  return {
+    props: {
+      data: meals,
+    },
+  };
+}

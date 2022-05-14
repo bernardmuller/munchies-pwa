@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { H3, Text } from 'common/components';
 import { colors, FontSizes } from 'common';
@@ -18,29 +18,25 @@ const Head = styled.div`
   align-items: center;
 `;
 
-export const GroceryList = () => {
+export const GroceryList = ({ mealItems, extraItems, menuId, onReload }) => {
   const misc = [
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
     { name: 'Misc Item' },
     { name: 'Misc Item' },
     { name: 'Misc Item' },
   ];
 
-  // useEffect(() => {
-  //   let temp = [];
-  //   props.meal_items && props.meal_items.forEach((meal) => {
-  //     console.log(meal)
-  //     meal.ingredients.forEach((item)=> {
-  //       temp.push(item)
-  //     })
-  //   })
-  //   console.log(temp)
-  //   setItems(temp);
-  // }, [])
+  useEffect(() => {
+    // let temp = [];
+    // mealItems &&
+    //   mealItems.forEach(meal => {
+    //     console.log(meal);
+    //     meal.ingredients.forEach(item => {
+    //       temp.push(item);
+    //     });
+    //   });
+    // console.log(temp);
+    // setItems(temp);
+  }, []);
 
   return (
     <Container>
@@ -52,10 +48,14 @@ export const GroceryList = () => {
           Total Items: 8
         </Text>
       </Head>
+      <IngredientsList name="Main Ingredients" mealItems={mealItems} />
 
-      <IngredientsList name="Main Ingredients" data={misc} />
-
-      <ExtraItems name="Extra Items" data={misc} />
+      <ExtraItems
+        name="Extra Items"
+        extraItems={extraItems}
+        menuId={menuId}
+        onReload={onReload}
+      />
     </Container>
   );
 };

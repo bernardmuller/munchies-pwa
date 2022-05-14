@@ -31,13 +31,13 @@ const Gradient = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   padding: 1rem;
   background-image: linear-gradient(
     0deg,
-    rgb(0, 0, 0, 0.8),
+    rgb(0, 0, 0, 0.9),
     rgb(255, 255, 255, 0)
   );
 `;
@@ -70,7 +70,7 @@ const Placeholder = styled.div`
 export const MealCard = ({ onClick, active, img, name, season }) => {
   return (
     <Container onClick={() => onClick()} active={active}>
-      <Gradient>
+      <Gradient active={active}>
         <ImageContainer>
           {img ? (
             <Image src={img} alt="meal image" layout="fill" objectFit="cover" />

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from 'common/components';
 import { colors, FontSizes } from 'common';
 import { IoCheckboxOutline, IoCheckbox } from 'react-icons/io5';
+import { checkItem, unCheckItem } from 'api/itemActions';
+import { getCookie } from 'cookies-next';
 
 const Container = styled.div`
   width: 100%;
@@ -40,22 +42,40 @@ const ItemName = styled.span`
   margin: ${props => props.margin};
 `;
 
-const Item = ({ data }) => {
+const Item = ({ item }) => {
   const [checked, setChecked] = useState(false);
-  const [hover, setHover] = useState(false);
+  const token = getCookie('token');
+
+  const handleCheck = async itemData => {
+    setChecked(prev => !prev);
+    if (itemData.check) {
+      unCheckItem(item._id, token);
+    } else {
+      checkItem(itemData._id, token);
+    }
+  };
+
+  useEffect(() => {
+    if (item.check) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+    return () => {};
+  }, []);
 
   return (
     <ItemWrapper onClick={() => {}} checked={checked}>
       {checked ? (
         <IoCheckbox
           color={colors.primary}
-          onClick={() => setChecked(prev => !prev)}
+          onClick={() => handleCheck(item)}
           size="22px"
         />
       ) : (
         <IoCheckboxOutline
           color={colors.grey_light}
-          onClick={() => setChecked(prev => !prev)}
+          onClick={() => handleCheck(item)}
           size={22}
         />
       )}
@@ -65,13 +85,13 @@ const Item = ({ data }) => {
         margin="0 0 0 0.5rem"
         checked={checked}
       >
-        {data || 'name'}
+        {item.ingredient.name}
       </ItemName>
     </ItemWrapper>
   );
 };
 
-export const IngredientsList = ({ name }) => {
+export const IngredientsList = ({ mealItems, name }) => {
   return (
     <Container>
       <Text
@@ -82,8 +102,8 @@ export const IngredientsList = ({ name }) => {
         {name}
       </Text>
       <ItemsContainer>
-        {[1, 2, 3, 4].map(item => (
-          <Item key={item + Math.random()} data="item name" />
+        {mealItems.map(item => (
+          <Item key={item + Math.random() * 2} item={item} />
         ))}
       </ItemsContainer>
     </Container>
