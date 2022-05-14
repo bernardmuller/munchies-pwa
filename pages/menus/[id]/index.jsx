@@ -196,8 +196,6 @@ const MenuDetail = ({ data }) => {
     setLoading(false);
   };
 
-  console.log(JSON.stringify(menu.grocerylist.meal_items, null, 2));
-
   return (
     <Container>
       <Header
