@@ -18,26 +18,13 @@ const Head = styled.div`
   align-items: center;
 `;
 
-export const GroceryList = ({ mealItems, extraItems, menuId, onReload }) => {
-  const misc = [
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
-    { name: 'Misc Item' },
-  ];
-
-  useEffect(() => {
-    // let temp = [];
-    // mealItems &&
-    //   mealItems.forEach(meal => {
-    //     console.log(meal);
-    //     meal.ingredients.forEach(item => {
-    //       temp.push(item);
-    //     });
-    //   });
-    // console.log(temp);
-    // setItems(temp);
-  }, []);
-
+export const GroceryList = ({
+  mealItems,
+  extraItems,
+  menuId,
+  onReload,
+  totalItems,
+}) => {
   return (
     <Container>
       <Head>
@@ -45,7 +32,7 @@ export const GroceryList = ({ mealItems, extraItems, menuId, onReload }) => {
           Grocery list
         </H3>
         <Text color={colors.grey} fontSize={FontSizes.Small}>
-          Total Items: 8
+          Total Items: {totalItems || '0'}
         </Text>
       </Head>
       <IngredientsList name="Main Ingredients" mealItems={mealItems} />

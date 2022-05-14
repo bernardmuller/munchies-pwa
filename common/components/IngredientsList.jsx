@@ -97,14 +97,23 @@ export const IngredientsList = ({ mealItems, name }) => {
       <Text
         fontSize={FontSizes.Small}
         color={colors.white}
-        margin="0 0 0.5rem 0"
+        padding="0.5rem 0"
+        style={{ borderBottom: `1px solid ${colors.grey}` }}
       >
         {name}
       </Text>
       <ItemsContainer>
-        {mealItems.map(item => (
-          <Item key={item + Math.random() * 2} item={item} />
-        ))}
+        {mealItems.lenght > 0 ? (
+          <>
+            {mealItems.map(item => (
+              <Item key={item + Math.random() * 2} item={item} />
+            ))}
+          </>
+        ) : (
+          <Text margin="1rem" color={colors.grey} fontSize={FontSizes.Smaller}>
+            No meal items yet. First add meals to the menu
+          </Text>
+        )}
       </ItemsContainer>
     </Container>
   );

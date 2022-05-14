@@ -22,10 +22,6 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   margin: 0 0 0.5rem 0;
-
-  &:hover {
-    background-color: ${colors.secondary_dark};
-  }
 `;
 
 const Form = styled.form`
@@ -219,7 +215,9 @@ export const ExtraItems = ({ name, menuId, extraItems, onReload }) => {
       <Text
         fontSize={FontSizes.Small}
         color={colors.white}
-        margin="0 0 0.4rem 0"
+        margin="0 0 0.6rem 0"
+        padding="0.5rem 0"
+        style={{ borderBottom: `1px solid ${colors.grey}` }}
       >
         {name}
       </Text>

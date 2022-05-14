@@ -11,6 +11,7 @@ import {
   CancelButton,
   Confirmation,
   GroceryList,
+  Button,
 } from 'common/components';
 import { FontSizes, colors } from 'common';
 import { MealCard } from 'common/components/card/MealCard';
@@ -232,10 +233,16 @@ const MenuDetail = ({ data }) => {
         <H4 color={colors.white} fontSize={FontSizes.Regular}>
           Meals
         </H4>
-
-        <Link href={`/menus/${menu._id}/meals`} passHref>
-          <Text color={colors.primary}>edit</Text>
-        </Link>
+        {menu.meals.length < 1 && (
+          <Button
+            primary
+            width="8rem"
+            gap="0.5rem"
+            onClick={() => router.push(`/menus/${menu._id}/meals`)}
+          >
+            Add Meals
+          </Button>
+        )}
       </Wrapper>
 
       <WeekContainer>
@@ -261,6 +268,10 @@ const MenuDetail = ({ data }) => {
           extraItems={menu.grocerylist.extra_items}
           menuId={menu._id}
           onReload={handleReload}
+          totalItems={
+            menu.grocerylist.meal_items.length +
+            menu.grocerylist.extra_items.length
+          }
         />
       </Content>
     </Container>
