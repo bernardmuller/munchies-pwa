@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { colors, DataStore } from 'common';
 import { apiEndpoint } from 'common/constants';
-import { setCookies } from 'cookies-next';
-import { login } from 'api';
+import { getCookie, setCookies } from 'cookies-next';
+import { login, checkAuth } from 'api';
 import { useForm } from 'react-hook-form';
 import {
   Button,
@@ -45,6 +45,21 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+
+  const validateToken = async token => {
+    const res = await checkAuth(token);
+    if (res && res.auth) {
+      router.push('/menus');
+    }
+  };
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if (token) {
+      validateToken(token);
+    }
+    return () => {};
+  }, []);
 
   const [requestError, setRequestError] = useState({
     email: '',

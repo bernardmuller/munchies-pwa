@@ -31,3 +31,18 @@ export const login = async (email: String, password: String) => {
     return ret;
   }
 };
+
+export const checkAuth = async (token: String) => {
+  const url = `http://localhost:8080/auth`;
+
+  try {
+    const response = await Api.get(url, token);
+    return response;
+  } catch (ex: any) {
+    const ret = resolveRejected(ex);
+    if (ex && ex.response && ex.response.status === 401) {
+      ret.message = 'Something went wrong';
+    }
+    return ex;
+  }
+};
