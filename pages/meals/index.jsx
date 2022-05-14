@@ -70,7 +70,7 @@ function Meals({ data }) {
                 name={meal.name}
                 seasons={meal.seasons}
                 count={false}
-                key={meal}
+                key={meal + Math.random()}
                 onClick={() => router.push(`/meals/${meal._id}`)}
               />
             ))

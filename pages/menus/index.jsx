@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { Header, Text } from 'common/components';
 import { colors, FontSizes, PrivateContainer } from 'common';
-import { getMenus, createMenu, deleteMenu } from 'api';
+import { getMenus, createMenu } from 'api';
 import { IoAdd, IoDocumentText } from 'react-icons/io5';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import { getCookie } from 'cookies-next';
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   background-color: ${colors.secondary_light};
 `;
 
-const Menu = styled.button`
+const Menu = styled.div`
   width: 100%;
   padding: 0.3rem;
   display: flex;
@@ -83,27 +83,34 @@ const MenuButton = ({ menu, onClick }) => {
 const Menus = ({ data }) => {
   const [menus, setMenus] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [creating, setCreating] = useState(false);
   const token = getCookie('token');
   const router = useRouter();
   const activeContext = useContext(ActiveViewContext);
 
   const fetchMenus = async () => {
+    setCreating(true);
     await getMenus(token)
       .then(res => setMenus(res))
       .catch(err => console.log(err));
     setLoading(true);
     setLoading(false);
+    setCreating(false);
   };
 
   const newMenu = async () => {
-    setLoading(true);
+    setCreating(true);
     await createMenu(token).catch(err => console.log(err));
     fetchMenus();
   };
 
   useEffect(() => {
     activeContext.dispatch({ type: 'MENUS' });
+    fetchMenus().then(() => console.log('fetched'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      console.log('exit menus');
+    };
   }, []);
 
   return (
@@ -118,14 +125,14 @@ const Menus = ({ data }) => {
               heading="My Menus"
               onRightButtonClick={() => newMenu()}
               RightIcon={IoAdd}
-              loading={loading}
+              loading={creating}
             />
             <MenusContainer>
               {menus &&
                 menus.map(menu => (
                   <MenuButton
                     menu={menu}
-                    key={Math.random()}
+                    key={menu + Math.random() + Math.random()}
                     onClick={() => {
                       router.push(`/menus/${menu._id}`);
                     }}
@@ -144,11 +151,11 @@ export async function getServerSideProps(context) {
   const { res } = context;
   const token = getCookie('token', { req, res });
 
-  const data = await getMenus(token);
+  const menus = await getMenus(token);
 
   return {
     props: {
-      data,
+      data: menus,
     },
   };
 }
