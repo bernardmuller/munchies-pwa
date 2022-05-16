@@ -103,7 +103,7 @@ export const IngredientsList = ({ mealItems, name }) => {
         {name}
       </Text>
       <ItemsContainer>
-        {mealItems.lenght > 0 ? (
+        {mealItems.length > 0 ? (
           <>
             {mealItems.map(item => (
               <Item key={item + Math.random() * 2} item={item} />
@@ -111,7 +111,7 @@ export const IngredientsList = ({ mealItems, name }) => {
           </>
         ) : (
           <Text margin="1rem" color={colors.grey} fontSize={FontSizes.Smaller}>
-            No meal items yet. First add meals to the menu
+            No meal items yet. First add meals to the menu.
           </Text>
         )}
       </ItemsContainer>

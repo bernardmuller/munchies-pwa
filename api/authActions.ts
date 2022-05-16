@@ -33,7 +33,7 @@ export const login = async (email: String, password: String) => {
 };
 
 export const checkAuth = async (token: String) => {
-  const url = `http://localhost:8080/auth`;
+  const url = `${apiEndpoint}auth`;
 
   try {
     const response = await Api.get(url, token);

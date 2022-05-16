@@ -35,7 +35,7 @@ const Background = styled.div`
   }
 `;
 
-function Login() {
+function Register() {
   const {
     register,
     handleSubmit,
@@ -72,7 +72,7 @@ function Login() {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
-      const res = await fetch(`${apiEndpoint}auth/login`, {
+      const res = await fetch(`${apiEndpoint}auth/register`, {
         method: 'POST',
         mode: 'cors',
         redirect: 'follow',
@@ -104,15 +104,12 @@ function Login() {
       console.log(err);
       setLoading(false);
     }
-    console.log(data);
   }
   return (
     <>
       <Head>
         <title>Munchies - Login</title>
       </Head>
-
-      {/* <Background /> */}
 
       <Stack padding="2rem" gap="5">
         <Flex direction="column">
@@ -121,7 +118,7 @@ function Login() {
           </Heading>
 
           <Heading color="grey" fontSize="2xl">
-            Log in
+            Register
           </Heading>
         </Flex>
 
@@ -185,22 +182,16 @@ function Login() {
               isLoading={loading}
               mt="1.5rem"
             >
-              Log In
+              Register
             </Button>
           </Flex>
         </form>
 
         <Flex direction="column" gap="1rem" width="full" align="center">
-          {/* <Link href="/forgot-password" passHref>
-            <Text fontSize="sm" color={colors.grey_dark}>
-              Forgot Password?
-            </Text>
-          </Link> */}
-
           <Flex gap="2">
-            Need an account?
-            <Link href="/register" passHref>
-              <strong>Register</strong>
+            Already have an account?
+            <Link href="/login" passHref>
+              <strong>Log in</strong>
             </Link>
           </Flex>
         </Flex>
@@ -209,4 +200,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
