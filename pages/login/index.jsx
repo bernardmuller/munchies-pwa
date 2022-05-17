@@ -21,6 +21,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import { PublicContainer } from 'common/hocs';
 
 const Background = styled.div`
   position: absolute;
@@ -104,10 +105,9 @@ function Login() {
       console.log(err);
       setLoading(false);
     }
-    console.log(data);
   }
   return (
-    <>
+    <PublicContainer>
       <Head>
         <title>Munchies - Login</title>
       </Head>
@@ -205,7 +205,7 @@ function Login() {
           </Flex>
         </Flex>
       </Stack>
-    </>
+    </PublicContainer>
   );
 }
 

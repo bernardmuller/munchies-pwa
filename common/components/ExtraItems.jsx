@@ -174,6 +174,7 @@ const AddItem = ({ menuId, onReload }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [add, setAdd] = useState(false);
@@ -186,6 +187,7 @@ const AddItem = ({ menuId, onReload }) => {
       .then(() => onReload())
       .finally(() => {
         setLoading(false);
+        reset();
       });
   };
 

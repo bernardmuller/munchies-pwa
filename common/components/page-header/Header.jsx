@@ -39,10 +39,6 @@ const HeaderButton = styled.button`
   &:hover {
     cursor: pointer;
   }
-
-  @media (min-width: 1025px) {
-    display: none;
-  }
 `;
 
 export const Header = ({

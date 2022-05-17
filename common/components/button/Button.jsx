@@ -82,7 +82,7 @@ const Tertiary = styled(ButtonBase)`
 `;
 
 const Inline = styled.button`
-  color: ${colors.black};
+  color: ${props => props.color || colors.black};
   background: none;
   font-size: ${props => props.fontSize || FontSizes.Regular};
   font-weight: ${props => props.fontWeight || 'Bold'};
@@ -111,6 +111,7 @@ export function Button({
   margin,
   showLoading,
   children,
+  color,
 }) {
   if (primary) {
     return (
@@ -176,6 +177,7 @@ export function Button({
         height={height}
         disabled={disabled}
         onClick={onClick}
+        color={color}
       >
         {children}
       </Inline>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { getCookie } from 'cookies-next';
-import { MealCardList, Text, Header } from 'common/components';
+import { MealCardList, Text, Header, Button } from 'common/components';
 import { createMeal, getMeals } from 'api';
 import { colors, FontSizes, PrivateContainer } from 'common';
 import { IoAdd } from 'react-icons/io5';
@@ -89,13 +89,9 @@ function Meals({ data }) {
               >
                 You do not have any meals in your collection.
               </Text>
-              <Text
-                fontSize={FontSizes.Small}
-                color={colors.grey_light}
-                textAlign="center"
-              >
-                Create one by clicking the icon above.
-              </Text>
+              <Button inline color={colors.primary}>
+                Create Meal
+              </Button>
             </>
           )}
         </MealsContainer>

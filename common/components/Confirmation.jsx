@@ -1,53 +1,9 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
 import { colors, FontSizes } from 'common';
-
 import { Text, Button } from 'common/components';
-
 import ReactDOM from 'react-dom';
-
-const ModalOverlay = props => {
-  return (
-    <Container>
-      <Modal>
-        <Text fontSize={FontSizes.Small}>{props.text}</Text>
-        <Buttons>
-          <Button onClick={() => props.onConfirm()} primary>
-            Yes
-          </Button>
-          <Button onClick={() => props.onCancel()} tertiary>
-            No
-          </Button>
-        </Buttons>
-      </Modal>
-    </Container>
-  );
-};
-
-const Backdrop = props => {
-  return <BackdropContainer onClick={props.onClose} />;
-};
-
-export const Confirmation = props => {
-  return (
-    <React.Fragment>
-      {ReactDOM.createPortal(
-        <Backdrop onClose={props.onClose} />,
-        document.getElementById('backdrop-root')
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay
-          {...props}
-          onCancel={props.onCancel}
-          onConfirm={props.onConfirm}
-        />,
-        document.getElementById('overlay-root')
-      )}
-    </React.Fragment>
-  );
-};
+import { DeviceMediaQueries } from 'common/device';
 
 const BackdropContainer = styled.div`
   position: fixed;
@@ -83,4 +39,45 @@ const Modal = styled.div`
   border-radius: 10px;
   gap: 1.5rem;
   text-align: center;
+
+  @media ${DeviceMediaQueries.laptop} {
+    width: 40%;
+  }
 `;
+
+const ModalOverlay = ({ text, onConfirm, onCancel }) => {
+  return (
+    <Container>
+      <Modal>
+        <Text fontSize={FontSizes.Small}>{text}</Text>
+        <Buttons>
+          <Button onClick={() => onConfirm()} primary>
+            Yes
+          </Button>
+          <Button onClick={() => onCancel()} tertiary>
+            No
+          </Button>
+        </Buttons>
+      </Modal>
+    </Container>
+  );
+};
+
+const Backdrop = ({ onClose }) => {
+  return <BackdropContainer onClick={onClose} />;
+};
+
+export const Confirmation = ({ onClose, onCancel, onConfirm, ...props }) => {
+  return (
+    <>
+      {ReactDOM.createPortal(
+        <Backdrop onClose={onClose} />,
+        document.getElementById('backdrop-root')
+      )}
+      {ReactDOM.createPortal(
+        <ModalOverlay {...props} onCancel={onCancel} onConfirm={onConfirm} />,
+        document.getElementById('overlay-root')
+      )}
+    </>
+  );
+};

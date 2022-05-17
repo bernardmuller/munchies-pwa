@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { Header, Text } from 'common/components';
+import { Header, Text, Button } from 'common/components';
 import { colors, FontSizes, PrivateContainer } from 'common';
 import { getMenus, createMenu } from 'api';
 import { IoAdd, IoDocumentText } from 'react-icons/io5';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import { getCookie } from 'cookies-next';
+import { Flex, Grid } from '@chakra-ui/react';
 
 const Wrapper = styled.div`
   display: flex;
@@ -126,7 +127,7 @@ const Menus = ({ data }) => {
               loading={creating}
             />
             <MenusContainer>
-              {menus &&
+              {menus.length > 0 ? (
                 menus.map(menu => (
                   <MenuButton
                     menu={menu}
@@ -135,7 +136,22 @@ const Menus = ({ data }) => {
                       router.push(`/menus/${menu._id}`);
                     }}
                   />
-                ))}
+                ))
+              ) : (
+                <Grid justifyContent="center" gap={2}>
+                  <Text fontSize={FontSizes.Small} color={colors.grey}>
+                    Nothing to see here yet.
+                  </Text>
+                  <Button
+                    inline
+                    color={colors.primary}
+                    height="0.5"
+                    onClick={() => newMenu()}
+                  >
+                    Create Menu
+                  </Button>
+                </Grid>
+              )}
             </MenusContainer>
           </>
         )}

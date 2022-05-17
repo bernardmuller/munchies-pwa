@@ -12,6 +12,7 @@ import { getMeal, deleteMeal } from 'api';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
+import { ContentContainer } from 'common/hocs';
 
 const Container = styled.div`
   width: 100%;
@@ -51,36 +52,38 @@ const MealDetail = ({ data, onClose }) => {
   };
 
   return (
-    <Container>
-      <Header
-        heading="Meal Detail"
-        onLeftButtonClick={() => router.back()}
-        onRightButtonClick={() => setShowConfirmation(true)}
-        RightIcon={IoTrashOutline}
-        LeftIcon={IoArrowBackOutline}
-        loading={loading}
-      />
-
-      {showConfirmation && (
-        <Confirmation
-          text="Are you sure you want to delete this meal?"
-          onConfirm={removeMeal}
-          onCancel={() => setShowConfirmation(false)}
+    <ContentContainer>
+      <Container>
+        <Header
+          heading="Meal Detail"
+          onLeftButtonClick={() => router.back()}
+          onRightButtonClick={() => setShowConfirmation(true)}
+          RightIcon={IoTrashOutline}
+          LeftIcon={IoArrowBackOutline}
+          loading={loading}
         />
-      )}
 
-      {meal && (
-        <>
-          <MealInfo
-            meal={meal}
-            onClose={onClose}
-            onReload={() => fetchMeal()}
+        {showConfirmation && (
+          <Confirmation
+            text="Are you sure you want to delete this meal?"
+            onConfirm={removeMeal}
+            onCancel={() => setShowConfirmation(false)}
           />
+        )}
 
-          <MealDirections meal={meal} onReload={() => fetchMeal()} />
-        </>
-      )}
-    </Container>
+        {meal && (
+          <>
+            <MealInfo
+              meal={meal}
+              onClose={onClose}
+              onReload={() => fetchMeal()}
+            />
+
+            <MealDirections meal={meal} onReload={() => fetchMeal()} />
+          </>
+        )}
+      </Container>
+    </ContentContainer>
   );
 };
 

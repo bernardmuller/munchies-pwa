@@ -7,6 +7,7 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import { getUser, updateUser } from 'api';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { ContentContainer } from 'common/hocs';
 
 const Container = styled.div`
   width: 100%;
@@ -48,24 +49,26 @@ const Profile = ({ data }) => {
   }, []);
 
   return (
-    <Container>
-      <Header
-        heading="Settings"
-        LeftIcon={IoArrowBackOutline}
-        onLeftButtonClick={() => router.back()}
-      />
-      {!loading && (
-        <>
-          <UserInfo user={user} loading={loading} />
-          <EditProfile
-            data={user}
-            onUpdate={handleUpdate}
-            loading={loading}
-            showLoader={showLoader}
-          />
-        </>
-      )}
-    </Container>
+    <ContentContainer>
+      <Container>
+        <Header
+          heading="Settings"
+          LeftIcon={IoArrowBackOutline}
+          onLeftButtonClick={() => router.back()}
+        />
+        {!loading && (
+          <>
+            <UserInfo user={user} loading={loading} />
+            <EditProfile
+              data={user}
+              onUpdate={handleUpdate}
+              loading={loading}
+              showLoader={showLoader}
+            />
+          </>
+        )}
+      </Container>
+    </ContentContainer>
   );
 };
 

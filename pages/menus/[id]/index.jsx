@@ -23,6 +23,8 @@ import { useRouter } from 'next/router';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
 import Link from 'next/link';
 
+import { ContentContainer } from 'common/hocs';
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -197,82 +199,84 @@ const MenuDetail = ({ data }) => {
   };
 
   return (
-    <Container>
-      <Header
-        heading="Menu Detail"
-        onLeftButtonClick={() => router.back()}
-        onRightButtonClick={() => setShowConfirmation(true)}
-        RightIcon={IoTrashOutline}
-        LeftIcon={IoArrowBackOutline}
-        loading={loading}
-      />
-
-      {showConfirmation && (
-        <Confirmation
-          text="Are you sure you want to delete this meal?"
-          onConfirm={removeMenu}
-          onCancel={() => setShowConfirmation(false)}
-        />
-      )}
-      <Content>
-        <Name
-          name={menu && menu.name}
+    <ContentContainer>
+      <Container>
+        <Header
+          heading="Menu Detail"
+          onLeftButtonClick={() => router.back()}
+          onRightButtonClick={() => setShowConfirmation(true)}
+          RightIcon={IoTrashOutline}
+          LeftIcon={IoArrowBackOutline}
           loading={loading}
-          onRename={handleRename}
         />
 
-        {/* <Period period={{}} /> */}
-
-        <Text color={colors.grey} fontSize={FontSizes.Small} margin="0">
-          Creator: {(menu && menu.createdBy.firstname) || 'username'}
-        </Text>
-      </Content>
-      <Wrapper>
-        <H4 color={colors.white} fontSize={FontSizes.Regular}>
-          Meals
-        </H4>
-        {menu.meals.length < 1 && (
-          <Button
-            primary
-            width="8rem"
-            gap="0.5rem"
-            onClick={() => router.push(`/menus/${menu._id}/meals`)}
-          >
-            Add Meals
-          </Button>
+        {showConfirmation && (
+          <Confirmation
+            text="Are you sure you want to delete this meal?"
+            onConfirm={removeMenu}
+            onCancel={() => setShowConfirmation(false)}
+          />
         )}
-      </Wrapper>
+        <Content>
+          <Name
+            name={menu && menu.name}
+            loading={loading}
+            onRename={handleRename}
+          />
 
-      <WeekContainer>
-        <MealsContainer>
-          {menu &&
-            menu.meals.map(meal => (
-              <MealCard
-                img={meal.image}
-                name={meal.name || 'Meal Name'}
-                season="Season"
-                count={2}
-                key={meal + Math.random * 2}
-                secondary
-                onClick={() => router.push(`/meals/${meal._id}`)}
-              />
-            ))}
-        </MealsContainer>
-      </WeekContainer>
+          {/* <Period period={{}} /> */}
 
-      <Content style={{ marginBottom: '40rem' }}>
-        <GroceryList
-          mealItems={menu.grocerylist.meal_items}
-          extraItems={menu.grocerylist.extra_items}
-          menuId={menu._id}
-          onReload={handleReload}
-          totalItems={
-            menu.grocerylist.meal_items.length +
-            menu.grocerylist.extra_items.length
-          }
-        />
-      </Content>
-    </Container>
+          <Text color={colors.grey} fontSize={FontSizes.Small} margin="0">
+            Creator: {(menu && menu.createdBy.firstname) || 'username'}
+          </Text>
+        </Content>
+        <Wrapper>
+          <H4 color={colors.white} fontSize={FontSizes.Regular}>
+            Meals
+          </H4>
+          {menu.meals.length < 1 && (
+            <Button
+              primary
+              width="8rem"
+              gap="0.5rem"
+              onClick={() => router.push(`/menus/${menu._id}/meals`)}
+            >
+              Add Meals
+            </Button>
+          )}
+        </Wrapper>
+
+        <WeekContainer>
+          <MealsContainer>
+            {menu &&
+              menu.meals.map(meal => (
+                <MealCard
+                  img={meal.image}
+                  name={meal.name || 'Meal Name'}
+                  season="Season"
+                  count={2}
+                  key={meal + Math.random * 2}
+                  secondary
+                  onClick={() => router.push(`/meals/${meal._id}`)}
+                />
+              ))}
+          </MealsContainer>
+        </WeekContainer>
+
+        <Content style={{ marginBottom: '40rem' }}>
+          <GroceryList
+            mealItems={menu.grocerylist.meal_items}
+            extraItems={menu.grocerylist.extra_items}
+            menuId={menu._id}
+            onReload={handleReload}
+            totalItems={
+              menu.grocerylist.meal_items.length +
+              menu.grocerylist.extra_items.length
+            }
+          />
+        </Content>
+      </Container>
+    </ContentContainer>
   );
 };
 

@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { Header, H4, Button, MealCard } from 'common/components';
-import { FontSizes, colors } from 'common';
+import { FontSizes, colors, DeviceMediaQueries } from 'common';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import mealimg from 'assets/images/sushi_bg.jpg';
 import { getMenu, getMeals, addMealsToMenu } from 'api';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { ActiveViewContext } from 'contexts/ActiveViewContext';
+import { ContentContainer } from 'common/hocs';
 
 const Container = styled.div`
   width: 100%;
@@ -51,6 +51,14 @@ const MealsContainer = styled.div`
   gap: 1rem;
   margin-top: 0.5rem;
   padding: 0 1rem;
+
+  @media ${DeviceMediaQueries.tablet} {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media ${DeviceMediaQueries.laptopL} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
 
 const MenuMeals = ({ menu, meals, menuMeals }) => {
@@ -71,60 +79,62 @@ const MenuMeals = ({ menu, meals, menuMeals }) => {
   };
 
   return (
-    <Container>
-      <Header
-        heading="Menu Meals"
-        onLeftButtonClick={() => router.back()}
-        LeftIcon={IoArrowBackOutline}
-      />
+    <ContentContainer>
+      <Container>
+        <Header
+          heading="Menu Meals"
+          onLeftButtonClick={() => router.back()}
+          LeftIcon={IoArrowBackOutline}
+        />
 
-      <Content />
+        <Content />
 
-      <Wrapper>
-        <H4 fontSize={FontSizes.Regular} color={colors.white}>
-          Select Meals
-        </H4>
+        <Wrapper>
+          <H4 fontSize={FontSizes.Regular} color={colors.white}>
+            Select Meals
+          </H4>
 
-        <Button
-          primary
-          width="6rem"
-          disabled={selectedMeals.length === 0}
-          gap="0.5rem"
-          onClick={saveNewMeals}
-        >
-          Save
-          <Count disabled={selectedMeals.length === 0}>
-            {selectedMeals.length || '0'}
-          </Count>
-        </Button>
-      </Wrapper>
+          <Button
+            primary
+            width="6rem"
+            disabled={selectedMeals.length === 0}
+            gap="0.5rem"
+            onClick={saveNewMeals}
+          >
+            Save
+            <Count disabled={selectedMeals.length === 0}>
+              {selectedMeals.length || '0'}
+            </Count>
+          </Button>
+        </Wrapper>
 
-      <Waterfall>
-        <MealsContainer>
-          {meals &&
-            meals.map((meal, index) => (
-              <MealCard
-                img={meal.image || (index % 2 === 0 && mealimg)}
-                name={meal.name || 'Meal Name'}
-                active={selectedMeals.includes(meal._id)}
-                season={meal.seasons}
-                count={2}
-                key={meal}
-                onClick={() => {
-                  if (selectedMeals.includes(meal._id)) {
-                    const temp = selectedMeals.filter(item => {
-                      return item !== meal._id;
-                    });
-                    setSelectedMeals(temp);
-                  } else {
-                    setSelectedMeals([...selectedMeals, meal._id]);
-                  }
-                }}
-              />
-            ))}
-        </MealsContainer>
-      </Waterfall>
-    </Container>
+        <Waterfall>
+          <MealsContainer>
+            {meals &&
+              meals.map((meal, index) => (
+                <MealCard
+                  img={meal.image}
+                  name={meal.name || 'Meal Name'}
+                  active={selectedMeals.includes(meal._id)}
+                  season={meal.seasons}
+                  count={2}
+                  key={meal}
+                  onClick={() => {
+                    if (selectedMeals.includes(meal._id)) {
+                      const temp = selectedMeals.filter(item => {
+                        return item !== meal._id;
+                      });
+                      setSelectedMeals(temp);
+                    } else {
+                      setSelectedMeals([...selectedMeals, meal._id]);
+                    }
+                  }}
+                />
+              ))}
+          </MealsContainer>
+        </Waterfall>
+      </Container>
+    </ContentContainer>
   );
 };
 

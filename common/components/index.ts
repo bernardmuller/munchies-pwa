@@ -6,7 +6,6 @@ export * from './text';
 export * from './page-header';
 export * from './input';
 export * from './loader';
-export * from './AddMealsTab';
 export * from './Confirmation';
 export * from './EditProfile';
 export * from './ExtraItems';
