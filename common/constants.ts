@@ -1,4 +1,4 @@
-export const appVersion = 'v1.0.1';
+export const appVersion = 'v1.0.2';
 
 export const apiEndpoint = 'https://munchies-api-xp8sb.ondigitalocean.app/';
 
