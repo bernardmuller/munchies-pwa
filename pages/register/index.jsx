@@ -91,7 +91,7 @@ function Register() {
         setRequestError(response.errors.email);
         setRequestError(response.errors.password);
       }
-      console.log(response);
+
       setCookies('token', response.token);
       setCookies('user', response.newUser);
 
