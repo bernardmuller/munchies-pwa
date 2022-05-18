@@ -95,7 +95,7 @@ function Register() {
       setCookies('token', response.token);
       setCookies('user', response.newUser);
 
-      if (response.user) {
+      if (response.newUser) {
         router.push('/meals');
       }
 
