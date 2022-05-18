@@ -91,10 +91,9 @@ function Register() {
         setRequestError(response.errors.email);
         setRequestError(response.errors.password);
       }
-      await DataStore.set('MUNCHIES_USER', response.user);
-
+      console.log(response);
       setCookies('token', response.token);
-      setCookies('user', response.user);
+      setCookies('user', response.newUser);
 
       if (response.user) {
         router.push('/meals');
